@@ -1,11 +1,16 @@
-def create_board():
-    board = [[' ' for _ in range(3)] for _ in range(3)]
-    return board
 
+#make a move
+def make_move(board, move, player):
+    if board[move[0]][move[1]] == ' ':
+        board[move[0]][move[1]] = player
+        return True
+    return False
 
 
 # Path: Projects/Tic-Tac-Toe/main/components/backend/normalMode.py
 
+
+#check if the game is over
 def check_winner(board):
     for i in range(3):
         if board[i][0] == board[i][1] == board[i][2] and board[i][0] != ' ':
