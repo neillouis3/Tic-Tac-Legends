@@ -1,3 +1,10 @@
+#make board
+def make_board():
+    board = []
+    for i in range(3):
+        board.append([' ']*3)
+    return board
+
 
 #make a move
 def make_move(board, move, player):
