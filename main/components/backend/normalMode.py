@@ -30,3 +30,37 @@ def check_winner(board):
         return board[0][2]
     return None
 
+class NormalMode:
+    def __init__(self):
+        self.board = make_board()
+        self.player = 'X'
+        self.winner = None
+
+    def make_move(self, move):
+        if self.winner:
+            return False
+        if make_move(self.board, move, self.player):
+            self.winner = check_winner(self.board)
+            if self.player == 'X':
+                self.player = 'O'
+            else:
+                self.player = 'X'
+            return True
+        return False
+
+    def get_board(self):
+        return self.board
+
+    def get_player(self):
+        return self.player
+
+    def get_winner(self):
+        return self.winner
+
+    def get_state(self):
+        return self.board, self.player, self.winner
+
+    def reset(self):
+        self.board = make_board()
+        self.player = 'X'
+        self.winner = None
