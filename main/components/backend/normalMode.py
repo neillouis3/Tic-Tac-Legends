@@ -1,21 +1,8 @@
 # Add and remove puzzle from database
 
+import random
+
+from main.components.backend import database
 
 
-from main import db
-
-
-
-
-
-
-
-def Add():
-    pass
-
-
-
-def Remove():
-    pass
-
-
+ 
