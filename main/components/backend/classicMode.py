@@ -4,9 +4,32 @@ from player import player
 class TicTacToe:
     def __init__(self):
         self.board = [' ' for x in range(9)]
-        self.currentPlayer = 'X'
+        self.playerOne = player('PLayer One', 'X')  # Player One
+        self.playerTwo = player('Player Two', 'O')  # Player Two
+        self.currentPlayer = self.playerOne
         self.winner = None
         self.gameRunning = True
+
+    def getBoard(self):
+        return self.board
+    
+    def getPlayerOne(self):
+        return self.playerOne
+    
+    def getPlayerTwo(self):
+        return self.playerTwo
+    
+    def getCurrentPlayer(self):
+        return self.currentPlayer
+    
+    def getWinner(self):
+        return self.winner
+    
+    def getGameRunning(self):
+        return self.gameRunning
+
+
+# Test --------------------------------------------------------------------------------------------
 
     def printBoard(self):
         print(' ' + self.board[0] + ' | ' + self.board[1] + ' | ' + self.board[2])
@@ -23,7 +46,7 @@ class TicTacToe:
                 playerMove = int(playerMove)
                 if playerMove >= 1 and playerMove <= 9:
                     if self.board[playerMove - 1] == ' ':
-                        self.board[playerMove - 1] = self.currentPlayer
+                        self.board[playerMove - 1] = self.currentPlayer.symbol
                         valid = True
                     else:
                         print('That space is already taken')
@@ -32,45 +55,46 @@ class TicTacToe:
             except:
                 print('Please enter a number')
 
+# -------------------------------------------------------------------------------------------------
+
     def checkWin(self):
         # Check for win or tie logic here
         # check rows
         if self.board[0] == self.board[1] == self.board[2] != ' ':
-            self.gameRunning = False
             self.winner = self.board[0]
         elif self.board[3] == self.board[4] == self.board[5] != ' ':
-            self.gameRunning = False
             self.winner = self.board[3]
         elif self.board[6] == self.board[7] == self.board[8] != ' ':
-            self.gameRunning = False
             self.winner = self.board[6]
         # check columns
         elif self.board[0] == self.board[3] == self.board[6] != ' ':
-            self.gameRunning = False
             self.winner = self.board[0]
         elif self.board[1] == self.board[4] == self.board[7] != ' ':
-            self.gameRunning = False
             self.winner = self.board[1]
         elif self.board[2] == self.board[5] == self.board[8] != ' ':
-            self.gameRunning = False
             self.winner = self.board[2]
         # check diagonals
         elif self.board[0] == self.board[4] == self.board[8] != ' ':
-            self.gameRunning = False
             self.winner = self.board[0]
         elif self.board[2] == self.board[4] == self.board[6] != ' ':
-            self.gameRunning = False
             self.winner = self.board[2]
         # check tie
         elif ' ' not in self.board:
-            self.gameRunning = False
             self.winner = 'Tie'
 
     def switchPlayer(self):
-        if self.currentPlayer == 'X':
-            self.currentPlayer = 'O'
+        if self.currentPlayer == self.playerOne:
+            self.currentPlayer = self.playerTwo
         else:
-            self.currentPlayer = 'X'
+            self.currentPlayer = self.playerOne
+
+    def restartGame(self):
+        self.board = [' ' for x in range(9)]
+        self.winner = None
+        self.gameRunning = True
+
+    def exitGame(self):
+        gameRunning = False
 
 # Usage
 game = TicTacToe()
@@ -79,4 +103,3 @@ while game.gameRunning:
     game.playerInput()
     game.checkWin()
     game.switchPlayer()
- 
