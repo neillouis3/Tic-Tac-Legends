@@ -1,3 +1,6 @@
+from player import player
+
+
 class TicTacToe:
     def __init__(self):
         self.board = [' ' for x in range(9)]
