@@ -1,5 +1,7 @@
 from player import player
+from flask import Flask, request, jsonify
 
+app = Flask(__name__)
 
 class TicTacToe:
     def __init__(self):
@@ -10,6 +12,8 @@ class TicTacToe:
         self.winner = None
         self.gameRunning = True
 
+
+# Test --------------------------------------------------------------------------------------------
     def printBoard(self):
         print(' ' + self.board[0] + ' | ' + self.board[1] + ' | ' + self.board[2])
         print('---|---|---')
@@ -33,6 +37,8 @@ class TicTacToe:
                     print('Please enter a number between 1 and 9')
             except:
                 print('Please enter a number')
+
+
 
     def checkWin(self):
         # Check for win or tie logic here
