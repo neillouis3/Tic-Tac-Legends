@@ -10,27 +10,6 @@ class TicTacToe:
         self.winner = None
         self.gameRunning = True
 
-    def getBoard(self):
-        return self.board
-    
-    def getPlayerOne(self):
-        return self.playerOne
-    
-    def getPlayerTwo(self):
-        return self.playerTwo
-    
-    def getCurrentPlayer(self):
-        return self.currentPlayer
-    
-    def getWinner(self):
-        return self.winner
-    
-    def getGameRunning(self):
-        return self.gameRunning
-
-
-# Test --------------------------------------------------------------------------------------------
-
     def printBoard(self):
         print(' ' + self.board[0] + ' | ' + self.board[1] + ' | ' + self.board[2])
         print('---|---|---')
@@ -54,8 +33,6 @@ class TicTacToe:
                     print('Please enter a number between 1 and 9')
             except:
                 print('Please enter a number')
-
-# -------------------------------------------------------------------------------------------------
 
     def checkWin(self):
         # Check for win or tie logic here
@@ -94,12 +71,16 @@ class TicTacToe:
         self.gameRunning = True
 
     def exitGame(self):
-        gameRunning = False
+        self.gameRunning = False
+
+    def startGame(self):
+        while self.gameRunning:
+            self.printBoard()
+            self.playerInput()
+            self.checkWin()
+            self.switchPlayer()
 
 # Usage
 game = TicTacToe()
-while game.gameRunning:
-    game.printBoard()
-    game.playerInput()
-    game.checkWin()
-    game.switchPlayer()
+game.startGame()
+
