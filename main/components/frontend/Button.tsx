@@ -18,7 +18,7 @@ export default function Button({
         onPress={onPress}
         style={[styles.button, style]}
         {...rest}>
-
+            {children}
         </TouchableOpacity>
     );
 }
@@ -29,5 +29,6 @@ const styles = StyleSheet.create({
         borderRadius: 6,
         backgroundColor: '#0a7ea4',
         alignItems: 'center',
+        justifyContent: 'center',
     },
 });
