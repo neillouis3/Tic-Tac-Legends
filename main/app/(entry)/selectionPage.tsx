@@ -2,15 +2,9 @@ import { ImageBackground, Image, StyleSheet, Platform } from 'react-native';
 import Button from '@/components/frontend/Button';
 import {View, Text} from 'react-native';
 
-export default function ModePage() {
+export default function SelectionPage() {
   return (
     <ImageBackground source={require('../../assets/images/bg.png')} style={styles.container}>
-      <Image source={require('../../assets/images/logo.png')} 
-        style={styles.logo}
-      />
-
-
-
 
       <Button 
         onPress={() => {}}
@@ -27,12 +21,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20,
-  },
-
-  logo: {
-    width: 200,
-    height: 200,
-    marginBottom: 40,
   },
 
   button: {
