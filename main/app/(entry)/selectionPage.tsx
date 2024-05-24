@@ -11,6 +11,25 @@ export default function SelectionPage() {
         style={styles.button}>
         <Text>Normal Mode</Text>
       </Button>
+
+      <Button 
+        onPress={() => {}}
+        style={styles.button}>
+        <Text>5x5</Text>
+      </Button>
+
+      <Button 
+        onPress={() => {}}
+        style={styles.button}>
+        <Text>Harder</Text>
+      </Button>
+
+      <Button 
+        onPress={() => {}}
+        style={styles.button}>
+        <Text>Normal Mode</Text>
+      </Button>
+      
     </ImageBackground>
   );
 }
