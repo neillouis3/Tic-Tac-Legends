@@ -9,7 +9,7 @@ export default function SelectionPage() {
       <Button 
         onPress={() => {}}
         style={styles.button}>
-        <Text>Play</Text>
+        <Text>Normal Mode</Text>
       </Button>
     </ImageBackground>
   );
