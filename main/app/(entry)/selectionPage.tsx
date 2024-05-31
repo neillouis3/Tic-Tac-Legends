@@ -2,9 +2,16 @@ import { ImageBackground, Image, StyleSheet, Platform } from 'react-native';
 import Button from '@/components/frontend/Button';
 import {View, Text} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+type RootStackParamList = {
+  NormalGameScreen: undefined;
+  PuzzleGameScreen: undefined;
+  GameModesScreen: undefined;
+};
 
 export default function SelectionPage() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   return (
     <ImageBackground source={require('../../assets/images/bg.png')} style={styles.container}>
