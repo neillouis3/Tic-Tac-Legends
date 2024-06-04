@@ -29,7 +29,6 @@ export default function NormalGame() {
             }
             return null;
         };
-
         const renderCell = (index) => {
             return (
                 <TouchableOpacity 
