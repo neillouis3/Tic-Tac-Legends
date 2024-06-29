@@ -1,5 +1,5 @@
+import React from 'react'; // Add this import at the top of the file
 import { ImageBackground, Image, StyleSheet, Platform, TouchableOpacity } from 'react-native';
-import Button from '@/components/frontend/Button';
 import {View, Text} from 'react-native';
 
 export default function HomeScreen({ navigation }: { navigation: any }) {
