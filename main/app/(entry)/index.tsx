@@ -1,22 +1,21 @@
-import { ImageBackground, Image, StyleSheet, Platform } from 'react-native';
+import { ImageBackground, Image, StyleSheet, Platform, TouchableOpacity } from 'react-native';
 import Button from '@/components/frontend/Button';
 import {View, Text} from 'react-native';
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }: { navigation: any }) {
+  const goToNormalGame = () => {
+    navigation.navigate('NormalGame');
+  };
+
   return (
     <ImageBackground source={require('../../assets/images/bg.png')} style={styles.container}>
       <Image source={require('../../assets/images/logo.png')} 
         style={styles.logo}
       />
 
-
-
-
-      <Button 
-        onPress={() => {}}
-        style={styles.button}>
+      <TouchableOpacity onPress={goToNormalGame} style={styles.button}>
         <Text>Play</Text>
-      </Button>
+      </TouchableOpacity>
     </ImageBackground>
   );
 }

@@ -1,21 +1,20 @@
-import { Stack } from 'expo-router';
+import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
-
-import { TabBarIcon } from '@/components/navigation/TabBarIcon';
-import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import NormalGame from './NormalGame';
+
+const Stack = createStackNavigator();
 
 export default function EntryLayout() {
   const colorScheme = useColorScheme();
 
   return (
-    <Stack>
-      <Stack.Screen
-        name="index"
-        options={{
-          headerShown: false
-        }} 
-      />
-    </Stack>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen name="NormalGame" component={NormalGame} />
+    </Stack.Navigator>
   );
 }
