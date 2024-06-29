@@ -30,9 +30,9 @@ const styles = StyleSheet.create({
   },
 
   logo: {
-    width: 200,
-    height: 200,
+    aspectRatio: 1,
     marginBottom: 40,
+    resizeMode: 'contain',
   },
 
   button: {
