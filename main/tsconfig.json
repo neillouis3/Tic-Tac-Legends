@@ -2,7 +2,6 @@
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "strict": true,
-    "jsx": "react",  // Ensure this line is present
     "paths": {
       "@/*": [
         "./*"
@@ -13,7 +12,6 @@
     "**/*.ts",
     "**/*.tsx",
     ".expo/types/**/*.ts",
-    "expo-env.d.ts",
-    "app/(entry)/NormalGame.jsx"
-  ]
+    "expo-env.d.ts"
+, "app/(entry)/NormalGame.jsx"  ]
 }
