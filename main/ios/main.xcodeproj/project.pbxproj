@@ -137,7 +137,6 @@
 				754332CA4491F598F30FB7B2 /* Pods-main.release.xcconfig */,
 			);
 			name = Pods;
-			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
