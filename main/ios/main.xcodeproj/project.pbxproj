@@ -128,7 +128,7 @@
 				8C2C69A6E298FD5DB820E9C6 /* Pods-main.debug.xcconfig */,
 				DEDF88C6C02924378258E649 /* Pods-main.release.xcconfig */,
 			);
-			path = Pods;
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		D7E4C46ADA2E9064B798F356 /* ExpoModulesProviders */ = {
