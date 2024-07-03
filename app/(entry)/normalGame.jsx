@@ -1,18 +1,30 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Button } from 'react-native';
 
-function NormalGame() {
+function NormalGame({ navigation }) {
   const [board, setBoard] = useState(Array(9).fill(null));
   const [isXNext, setIsXNext] = useState(true);
+  const [gameOver, setGameOver] = useState(false);
+  const [player1Wins, setPlayer1Wins] = useState(0);
+  const [player2Wins, setPlayer2Wins] = useState(0);
 
   const handleCellClick = (index) => {
-    if (board[index] || calculateWinner(board)) {
+    if (board[index] || calculateWinner(board) || gameOver) {
       return;
     }
     const newBoard = [...board];
     newBoard[index] = isXNext ? 'X' : 'O';
     setBoard(newBoard);
     setIsXNext(!isXNext);
+    const winner = calculateWinner(newBoard);
+    if (winner) {
+      setGameOver(true);
+      if (winner === 'X') {
+        setPlayer1Wins(player1Wins + 1);
+      } else {
+        setPlayer2Wins(player2Wins + 1);
+      }
+    }
   };
 
   const calculateWinner = (squares) => {
@@ -41,17 +53,27 @@ function NormalGame() {
     );
   };
 
+  const resetGame = () => {
+    setBoard(Array(9).fill(null));
+    setIsXNext(true);
+    setGameOver(false);
+  };
+
   const winner = calculateWinner(board);
   let status;
   if (winner) {
-    status = 'Winner: ' + winner;
+    status = 'Winner: ' + (winner === 'X' ? 'Player 1' : 'Player 2');
+  } else if (gameOver) {
+    status = 'Game Over';
   } else {
-    status = 'Next player: ' + (isXNext ? 'X' : 'O');
+    status = 'Next player: ' + (isXNext ? 'Player 1 (X)' : 'Player 2 (O)');
   }
 
   return (
     <View style={styles.container}>
       <Text style={styles.status}>{status}</Text>
+      <Text style={styles.winCount}>Player 1 Wins: {player1Wins}</Text>
+      <Text style={styles.winCount}>Player 2 Wins: {player2Wins}</Text>
       <View style={styles.board}>
         <View style={styles.row}>
           {renderCell(0)}
@@ -69,6 +91,10 @@ function NormalGame() {
           {renderCell(8)}
         </View>
       </View>
+      {(gameOver || winner) && (
+        <Button title="Retry" onPress={resetGame} />
+      )}
+      <Button title="Back to Menu" onPress={() => navigation.goBack()} />
     </View>
   );
 }
@@ -82,7 +108,11 @@ const styles = StyleSheet.create({
   },
   status: {
     fontSize: 20,
-    marginBottom: 20,
+    marginBottom: 10,
+  },
+  winCount: {
+    fontSize: 16,
+    marginBottom: 10,
   },
   board: {
     width: 300,
@@ -110,4 +140,3 @@ const styles = StyleSheet.create({
 });
 
 export default NormalGame;
-

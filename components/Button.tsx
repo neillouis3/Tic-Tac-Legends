@@ -26,10 +26,11 @@ export default function Button({
 const styles = StyleSheet.create({
     button: {
         padding: 12,
-        borderRadius: 6,
-        backgroundColor: '#0a7ea4',
+        borderRadius: 100,
+        backgroundColor: '#4299FF',
         alignItems: 'center',
         justifyContent: 'center',
+        width: '75%',
     },
 
 });

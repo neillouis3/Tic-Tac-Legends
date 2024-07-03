@@ -1,27 +1,26 @@
 import { ImageBackground, Image, StyleSheet, Platform, TouchableOpacity } from 'react-native';
 import Button from '@/components/Button';
-import {View, Text} from 'react-native';
+import { View, Text } from 'react-native';
 
 export default function HomeScreen({ navigation }: { navigation: any }) {
   const goToNormalGame = () => {
-    navigation.navigate('NormalGame');
+    navigation.navigate('normalGame');
   };
 
   return (
     <ImageBackground source={require('../../assets/images/bg.png')} style={styles.container}>
-      <Image source={require('../../assets/images/logo.png')} 
-        style={styles.logo}
-      />
+      <Image source={require('../../assets/images/title.png')} style={styles.logo} />
 
-      <TouchableOpacity onPress={goToNormalGame} style={styles.button}>
-        <Text>Play</Text>
-      </TouchableOpacity>
+      <Button onPress={goToNormalGame}>
+        <Text style={styles.buttonText}>Play</Text>
+      </Button>
+      <Text style={styles.bottomText}>neillouis3</Text>
     </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  container : {
+  container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
@@ -29,16 +28,26 @@ const styles = StyleSheet.create({
   },
 
   logo: {
-    aspectRatio: 1,
-    marginBottom: 40,
+    aspectRatio: 0.75,
+    marginBottom: 150, // Adjust this value as needed
+    marginTop: -150, // Move the logo higher by using a negative marginTop
     resizeMode: 'contain',
   },
 
-  button: {
-    padding: 12,
-    borderRadius: 6,
-    backgroundColor: '#0a7ea4',
-    alignItems: 'center',
-    justifyContent: 'center',
+  buttonText: {
+    color: 'white',
+    fontSize: 0,
+  },
+
+  bottomText: {
+    position: 'absolute',
+    bottom: 15,
+    left: 0,
+    right: 0,
+    textAlign: 'center',
+    color: '#4299FF',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
+
