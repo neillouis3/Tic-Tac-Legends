@@ -42,16 +42,7 @@ function NormalGame({ navigation }) {
     return null;
   };
 
-  const renderCell = (index) => {
-    return (
-      <TouchableOpacity 
-        style={styles.cell} 
-        onPress={() => handleCellClick(index)}
-      >
-        <Text style={styles.cellText}>{board[index]}</Text>
-      </TouchableOpacity>
-    );
-  };
+  
 
   const resetGame = () => {
     setBoard(Array(9).fill(null));
