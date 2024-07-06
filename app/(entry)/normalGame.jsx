@@ -1,39 +1,29 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Button } from 'react-native';
+import { View, Text, Button, StyleSheet } from 'react-native';
+import Board3x3 from '@/components/3x3/board';
+import GameLogic from '@/components/3x3/gameLogic';
 
-function NormalGame({ navigation }) {
-  const [gameOver] = useState(false);
-  const [player1Wins] = useState(0);
-  const [player2Wins] = useState(0);
+export default function NormalGame() {
+  const [gameState, setGameState] = useState({
+    board: Array(9).fill(null),
+    status: '',
+    player1Wins: 0,
+    player2Wins: 0,
+  });
 
+  const handleGameUpdate = (state) => {
+    setGameState(state);
+  };
 
+  const gameLogic = GameLogic({ onGameUpdate: handleGameUpdate });
 
   return (
     <View style={styles.container}>
-      <Text style={styles.status}>{status}</Text>
-      <Text style={styles.winCount}>Player 1 Wins: {player1Wins}</Text>
-      <Text style={styles.winCount}>Player 2 Wins: {player2Wins}</Text>
-      <View style={styles.board}>
-        <View style={styles.row}>
-          {renderCell(0)}
-          {renderCell(1)}
-          {renderCell(2)}
-        </View>
-        <View style={styles.row}>
-          {renderCell(3)}
-          {renderCell(4)}
-          {renderCell(5)}
-        </View>
-        <View style={styles.row}>
-          {renderCell(6)}
-          {renderCell(7)}
-          {renderCell(8)}
-        </View>
-      </View>
-      {(gameOver || winner) && (
-        <Button title="Retry" onPress={resetGame} />
-      )}
-      <Button title="Back to Menu" onPress={() => navigation.goBack()} />
+      <Text style={styles.status}>{gameState.status}</Text>
+      <Board3x3 board={gameState.board} handleCellClick={gameLogic.handleCellClick} />
+      <Button title="Reset Game" onPress={gameLogic.resetGame} />
+      <Text>Player 1 Wins: {gameState.player1Wins}</Text>
+      <Text>Player 2 Wins: {gameState.player2Wins}</Text>
     </View>
   );
 }
@@ -43,39 +33,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f5fcff',
+    backgroundColor: '#F5FCFF',
   },
   status: {
-    fontSize: 20,
-    marginBottom: 10,
-  },
-  winCount: {
-    fontSize: 16,
-    marginBottom: 10,
-  },
-  board: {
-    width: 300,
-    height: 300,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  row: {
-    flexDirection: 'row',
-  },
-  cell: {
-    width: 100,
-    height: 100,
-    backgroundColor: '#ddd',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#000',
-  },
-  cellText: {
     fontSize: 24,
-    fontWeight: 'bold',
+    marginBottom: 10,
   },
 });
-
-export default NormalGame;
