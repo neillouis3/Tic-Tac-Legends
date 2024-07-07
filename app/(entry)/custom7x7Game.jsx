@@ -1,33 +1,41 @@
-import React, { useState } from 'react';
-import { View, TouchableOpacity, Text, Button, StyleSheet, Modal } from 'react-native';
-import Board from '@/components/5x5/board';
-import GameLogic from '@/components/5x5/gameLogic';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, Button, StyleSheet, TouchableOpacity, Modal } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
+import useCustom7x7GameLogic from './custom7x7GameLogic';
+import Custom7x7Board from './custom7x7Board';
 
-
-export default function Normal5x5Game() {
-  const navigation = useNavigation();
+export default function Custom7x7Game({ navigation }) {
   const [gameState, setGameState] = useState({
-    board: Array(25).fill(null),
+    board: Array(49).fill(null),
     status: 'Next player: Player 1 (X)',
     player1Wins: 0,
     player2Wins: 0,
     winner: null,
+    blockedSquares: [],
   });
 
-  const handleGameUpdate = (state) => {
-    setGameState(state);
-  };
+  const gameLogic = useCustom7x7GameLogic((update) => {
+    setGameState((prevState) => ({
+      ...prevState,
+      ...update,
+    }));
+  });
 
-  const gameLogic = GameLogic({ onGameUpdate: handleGameUpdate });
+  useEffect(() => {
+    setGameState((prevState) => ({
+      ...prevState,
+      blockedSquares: gameLogic.blockedSquares,
+    }));
+  }, [gameLogic.blockedSquares]);
 
   const handlePlayAgain = () => {
     gameLogic.resetGame();
     setGameState((prevState) => ({
       ...prevState,
+      board: Array(49).fill(null),
       winner: null,
       status: 'Next player: Player 1 (X)',
+      blockedSquares: gameLogic.blockedSquares,
     }));
   };
 
@@ -39,14 +47,10 @@ export default function Normal5x5Game() {
         </Svg>
       </TouchableOpacity>
       <Text style={styles.status}>{gameState.status}</Text>
-      <Board board={gameState.board} handleCellClick={gameLogic.handleCellClick} />
+      <Custom7x7Board board={gameState.board} handleCellClick={gameLogic.handleCellClick} blockedSquares={gameState.blockedSquares} />
       <Text>Player 1 Wins: {gameState.player1Wins}</Text>
       <Text>Player 2 Wins: {gameState.player2Wins}</Text>
-      <Modal
-        visible={gameState.winner !== null}
-        transparent={true}
-        animationType="slide"
-      >
+      <Modal visible={gameState.winner !== null} transparent={true} animationType="slide">
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <Text style={styles.modalText}>{gameState.winner} wins!</Text>

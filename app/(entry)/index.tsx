@@ -12,6 +12,9 @@ export default function HomeScreen({ navigation }: { navigation: any }) {
   const goToNormal7x7Game = () => {
     navigation.navigate('normal7x7Game');
   };
+  const goToCustom7x7Game = () => {
+    navigation.navigate('custom7x7Game');
+  };
 
   return (
     <ImageBackground source={require('../../assets/images/bg.png')} style={styles.container}>
@@ -25,6 +28,9 @@ export default function HomeScreen({ navigation }: { navigation: any }) {
       </Button>
       <Button onPress={goToNormal7x7Game}>
         <Text style={styles.buttonText}>Play 7x7</Text>
+      </Button>
+      <Button onPress={goToCustom7x7Game}>
+        <Text style={styles.buttonText}>Play Custom 7x7</Text>
       </Button>
       <Text style={styles.bottomText}>neillouis3</Text>
     </ImageBackground>

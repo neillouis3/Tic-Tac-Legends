@@ -18,10 +18,16 @@ export default function GameLogic({ onGameUpdate }) {
       } else {
         setPlayer2Wins(player2Wins + 1);
       }
-      onGameUpdate({ board, status, player1Wins: player1Wins + (winner === 'X' ? 1 : 0), player2Wins: player2Wins + (winner === 'O' ? 1 : 0) });
+      onGameUpdate({
+        board,
+        status,
+        player1Wins: player1Wins + (winner === 'X' ? 1 : 0),
+        player2Wins: player2Wins + (winner === 'O' ? 1 : 0),
+        winner: winner === 'X' ? 'Player 1' : 'Player 2'
+      });
     } else {
       status = 'Next player: ' + (isXNext ? 'Player 1 (X)' : 'Player 2 (O)');
-      onGameUpdate({ board, status, player1Wins, player2Wins });
+      onGameUpdate({ board, status, player1Wins, player2Wins, winner: null });
     }
   }, [board]);
 
