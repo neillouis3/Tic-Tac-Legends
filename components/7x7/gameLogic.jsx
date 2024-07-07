@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 export default function GameLogic({ onGameUpdate }) {
-  const [board, setBoard] = useState(Array(25).fill(null));
+  const [board, setBoard] = useState(Array(49).fill(null));
   const [isXNext, setIsXNext] = useState(true);
   const [gameOver, setGameOver] = useState(false);
   const [player1Wins, setPlayer1Wins] = useState(0);
@@ -35,13 +35,13 @@ export default function GameLogic({ onGameUpdate }) {
 
   const calculateWinner = (squares) => {
     const lines = [
-      [0, 1, 2, 3, 4], [5, 6, 7, 8, 9], [10, 11, 12, 13, 14], [15, 16, 17, 18, 19], [20, 21, 22, 23, 24], // rows
-      [0, 5, 10, 15, 20], [1, 6, 11, 16, 21], [2, 7, 12, 17, 22], [3, 8, 13, 18, 23], [4, 9, 14, 19, 24], // columns
-      [0, 6, 12, 18, 24], [4, 8, 12, 16, 20] // diagonals
+      [0, 1, 2, 3, 4, 5, 6], [7, 8, 9, 10, 11, 12, 13], [14, 15, 16, 17, 18, 19, 20], [21, 22, 23, 24, 25, 26, 27], [28, 29, 30, 31, 32, 33, 34], [35, 36, 37, 38, 39, 40, 41], [42, 43, 44, 45, 46, 47, 48], // rows
+      [0, 7, 14, 21, 28, 35, 42], [1, 8, 15, 22, 29, 36, 43], [2, 9, 16, 23, 30, 37, 44], [3, 10, 17, 24, 31, 38, 45], [4, 11, 18, 25, 32, 39, 46], [5, 12, 19, 26, 33, 40, 47], [6, 13, 20, 27, 34, 41, 48], // columns
+      [0, 8, 16, 24, 32, 40, 48], [6, 12, 18, 24, 30, 36, 42] // diagonals
     ];
     for (let i = 0; i < lines.length; i++) {
-      const [a, b, c, d, e] = lines[i];
-      if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c] && squares[a] === squares[d] && squares[a] === squares[e]) {
+      const [a, b, c, d, e, f, g] = lines[i];
+      if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c] && squares[a] === squares[d] && squares[a] === squares[e] && squares[a] === squares[f] && squares[a] === squares[g]) {
         return squares[a];
       }
     }
@@ -49,7 +49,7 @@ export default function GameLogic({ onGameUpdate }) {
   };
 
   const resetGame = () => {
-    setBoard(Array(25).fill(null));
+    setBoard(Array(49).fill(null));
     setIsXNext(true);
     setGameOver(false);
   };

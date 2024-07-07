@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import Board from './board';
+import { useState, useEffect } from 'react';
 
 export default function GameLogic({ onGameUpdate }) {
   const [board, setBoard] = useState(Array(9).fill(null));
@@ -19,16 +18,19 @@ export default function GameLogic({ onGameUpdate }) {
       } else {
         setPlayer2Wins(player2Wins + 1);
       }
-    } else if (gameOver) {
+      onGameUpdate({ board, status, player1Wins: player1Wins + (winner === 'X' ? 1 : 0), player2Wins: player2Wins + (winner === 'O' ? 1 : 0) });
+    } else if (board.every(cell => cell)) {
       status = 'Game Over';
+      setGameOver(true);
+      onGameUpdate({ board, status, player1Wins, player2Wins });
     } else {
       status = 'Next player: ' + (isXNext ? 'Player 1 (X)' : 'Player 2 (O)');
+      onGameUpdate({ board, status, player1Wins, player2Wins });
     }
-    onGameUpdate({ board, status, player1Wins, player2Wins });
-  }, [board, isXNext, gameOver, player1Wins, player2Wins]);
+  }, [board]);
 
   const handleCellClick = (index) => {
-    if (board[index] || calculateWinner(board) || gameOver) {
+    if (board[index] || gameOver) {
       return;
     }
     const newBoard = [...board];

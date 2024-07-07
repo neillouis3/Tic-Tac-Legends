@@ -6,13 +6,25 @@ export default function HomeScreen({ navigation }: { navigation: any }) {
   const goToNormalGame = () => {
     navigation.navigate('normalGame');
   };
+  const goToNormal5x5Game = () => {
+    navigation.navigate('normal5x5Game');
+  };
+  const goToNormal7x7Game = () => {
+    navigation.navigate('normal7x7Game');
+  };
 
   return (
     <ImageBackground source={require('../../assets/images/bg.png')} style={styles.container}>
       <Image source={require('../../assets/images/title.png')} style={styles.logo} />
 
       <Button onPress={goToNormalGame}>
-        <Text style={styles.buttonText}>Play</Text>
+        <Text style={styles.buttonText}>Play 3x3</Text>
+      </Button>
+      <Button onPress={goToNormal5x5Game}>
+        <Text style={styles.buttonText}>Play 5x5</Text>
+      </Button>
+      <Button onPress={goToNormal7x7Game}>
+        <Text style={styles.buttonText}>Play 7x7</Text>
       </Button>
       <Text style={styles.bottomText}>neillouis3</Text>
     </ImageBackground>
