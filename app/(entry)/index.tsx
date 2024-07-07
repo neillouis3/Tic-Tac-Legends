@@ -1,5 +1,5 @@
 import { ImageBackground, Image, StyleSheet, Platform, TouchableOpacity } from 'react-native';
-import Button from '@/components/Button';
+import Button from '@/components/ui/Button';
 import { View, Text } from 'react-native';
 
 export default function HomeScreen({ navigation }: { navigation: any }) {
