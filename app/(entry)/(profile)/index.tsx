@@ -2,34 +2,10 @@ import { ImageBackground, Image, StyleSheet, Platform, TouchableOpacity } from '
 import Button from '@/components/ui/Button';
 import { View, Text } from 'react-native';
 
-export default function GameScreen({ navigation }: { navigation: any }) {
-  const goToNormalGame = () => {
-    navigation.navigate('normalGame');
-  };
-  const goToNormal5x5Game = () => {
-    navigation.navigate('normal5x5Game');
-  };
-  const goToNormal7x7Game = () => {
-    navigation.navigate('normal7x7Game');
-  };
-  const goToCustom7x7Game = () => {
-    navigation.navigate('custom7x7Game');
-  };
+export default function ProfileScreen({ navigation }: { navigation: any }) {
 
   return (
     <View style={styles.container}>
-      <Button onPress={goToNormalGame}>
-        <Text style={styles.buttonText}>Play 3x3</Text>
-      </Button>
-      <Button onPress={goToNormal5x5Game}>
-        <Text style={styles.buttonText}>Play 5x5</Text>
-      </Button>
-      <Button onPress={goToNormal7x7Game}>
-        <Text style={styles.buttonText}>Play 7x7</Text>
-      </Button>
-      <Button onPress={goToCustom7x7Game}>
-        <Text style={styles.buttonText}>Play Custom 7x7</Text>
-      </Button>
       <Text style={styles.bottomText}>neillouis3</Text>
     </View>
   );
