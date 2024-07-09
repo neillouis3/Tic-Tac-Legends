@@ -4,10 +4,10 @@ import React from 'react';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import NormalGame from './(game)/normalGame';
-import Normal5x5Game from './(game)/normal5x5Game';
-import Normal7x7Game from './(game)/normal7x7Game';
-import Custom7x7Game from './(game)/custom7x7Game';
+import NormalGame from './normalGame';
+import Normal5x5Game from './normal5x5Game';
+import Normal7x7Game from './normal7x7Game';
+import Custom7x7Game from './custom7x7Game';
 import HomeScreen from './index';
 
 const Stack = createNativeStackNavigator();

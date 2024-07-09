@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Button, StyleSheet, TouchableOpacity, Modal } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
-import useCustom7x7GameLogic from './custom7x7GameLogic';
-import Custom7x7Board from './custom7x7Board';
+import useCustom7x7GameLogic from '../../../components/mine7x7/custom7x7GameLogic';
+import Custom7x7Board from '../../../components/mine7x7/custom7x7Board';
 
 export default function Custom7x7Game({ navigation }) {
   const [gameState, setGameState] = useState({
