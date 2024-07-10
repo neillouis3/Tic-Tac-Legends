@@ -9,6 +9,7 @@ export default function SettingScreen() {
     <ScrollView style={styles.container}>
       <View>
         <Text style={styles.nameTitle}>Settings</Text>
+        
       </View>
       <Text style={styles.bottomText}>neillouis3</Text>
     </ScrollView>
