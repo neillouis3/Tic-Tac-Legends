@@ -1,13 +1,24 @@
 import { ImageBackground, Image, StyleSheet, Platform, TouchableOpacity } from 'react-native';
 import Button from '@/components/ui/Button';
-import { View, Text } from 'react-native';
+import { ScrollView, View, Text } from 'react-native';
 
 export default function ProfileScreen({ navigation }: { navigation: any }) {
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
+      <View>
+        <Text style={styles.nameTitle}>Neil Louise A. Castillon</Text>
+        <Text style={styles.uniqueID}>unique-id</Text>
+
+        <Text style={styles.levelTitle}>Level</Text>
+        <View style={styles.levelBarContainer}>
+          <View style={[styles.levelBar, {width:'50%'}]}></View>
+        </View>
+
+
+      </View>
       <Text style={styles.bottomText}>neillouis3</Text>
-    </View>
+    </ScrollView>
   );
 }
 

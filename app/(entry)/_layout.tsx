@@ -1,10 +1,13 @@
-
 import React from 'react';
-
 import { useColorScheme } from '@/hooks/useColorScheme';
-
-import {Tabs} from 'expo-router';
-
+import { Tabs } from 'expo-router';
+import GameIcon from '../../assets/icons/game-controller.svg';
+import GameOutlineIcon from '../../assets/icons/game-controller-outline.svg';
+import ProfileIcon from '../../assets/icons/person.svg';
+import ProfileOutlineIcon from '../../assets/icons/person-outline.svg';
+import SettingsIcon from '../../assets/icons/settings.svg';
+import SettingsOutlineIcon from '../../assets/icons/settings-outline.svg';
+import { SvgProps } from 'react-native-svg';
 
 export default function EntryLayout() {
   const colorScheme = useColorScheme();
@@ -12,37 +15,42 @@ export default function EntryLayout() {
   return (
     <Tabs
       initialRouteName="(game)"
-      screenOptions={({route}) => ({
-        tabBarIcon: ({focused, size}) => {
-          let iconName;
-          if (route.name === 'Foo') {
-            iconName = focused ? 'home' : 'home-outline';
-          } else if (route.name === 'Bar') {
-            iconName = focused ? 'basketball' : 'basketball-outline';
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, size }) => {
+          let IconComponent: React.FC<SvgProps>;
+
+          if (route.name === '(game)') {
+            IconComponent = focused ? GameIcon : GameOutlineIcon;
+          } else if (route.name === '(profile)') {
+            IconComponent = focused ? ProfileIcon : ProfileOutlineIcon;
+          } else if (route.name === '(setting)') {
+            IconComponent = focused ? SettingsIcon : SettingsOutlineIcon;
+          } else {
+            return null;
           }
-          return <Icon name={iconName} size={size} color={'pink'} />;
+
+          return <IconComponent width={size} height={size} fill="white" />;
         },
         tabBarLabelStyle: {
-          color: 'pink',
+          color: 'white',
         },
         tabBarStyle: {
-          backgroundColor: 'black',
+          backgroundColor: '#4299FF',
         },
       })}
     >
       <Tabs.Screen 
         name="(setting)"  
-        options={{title:"Settings"}} 
+        options={{ title: "Settings" }} 
       />
       <Tabs.Screen 
         name="(game)"   
-        options={{title:"Game"}}
+        options={{ title: "Game" }}
       />
       <Tabs.Screen 
         name="(profile)"   
-        options={{title:"Profile"}}
+        options={{ title: "Profile" }}
       />
-
     </Tabs>
   );
 }

@@ -1,13 +1,17 @@
 import { ImageBackground, Image, StyleSheet, Platform, TouchableOpacity } from 'react-native';
 import Button from '@/components/ui/Button';
 import { View, Text } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 
-export default function SettingScreen({ navigation }: { navigation: any }) {
+export default function SettingScreen() {
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
+      <View>
+        <Text style={styles.nameTitle}>Settings</Text>
+      </View>
       <Text style={styles.bottomText}>neillouis3</Text>
-    </View>
+    </ScrollView>
   );
 }
 
