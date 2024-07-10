@@ -2,12 +2,11 @@ import React, { useState } from 'react';
 import { View, TouchableOpacity, Text, Button, StyleSheet, Modal } from 'react-native';
 import Board from '@/components/5x5/board';
 import GameLogic from '@/components/5x5/gameLogic';
-import { useNavigation } from '@react-navigation/native';
 import Svg, { Path } from 'react-native-svg';
+import { Link } from 'expo-router';
 
 
 export default function Normal5x5Game() {
-  const navigation = useNavigation();
   const [gameState, setGameState] = useState({
     board: Array(25).fill(null),
     status: 'Next player: Player 1 (X)',
@@ -33,11 +32,11 @@ export default function Normal5x5Game() {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+      <Link href="/index" style={styles.backButton}>
         <Svg height="48" width="48" viewBox="0 0 512 512">
           <Path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="48" d="M244 400L100 256l144-144M120 256h292" />
         </Svg>
-      </TouchableOpacity>
+      </Link>
       <Text style={styles.status}>{gameState.status}</Text>
       <Board board={gameState.board} handleCellClick={gameLogic.handleCellClick} />
       <Text>Player 1 Wins: {gameState.player1Wins}</Text>

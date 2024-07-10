@@ -1,35 +1,23 @@
 import { ImageBackground, Image, StyleSheet, Platform, TouchableOpacity } from 'react-native';
 import Button from '@/components/ui/Button';
 import { View, Text } from 'react-native';
+import { Link } from 'expo-router';
 
 export default function GameScreen({ navigation }: { navigation: any }) {
-  const goToNormalGame = () => {
-    navigation.navigate('normalGame');
-  };
-  const goToNormal5x5Game = () => {
-    navigation.navigate('normal5x5Game');
-  };
-  const goToNormal7x7Game = () => {
-    navigation.navigate('normal7x7Game');
-  };
-  const goToCustom7x7Game = () => {
-    navigation.navigate('custom7x7Game');
-  };
-
   return (
     <View style={styles.container}>
-      <Button onPress={goToNormalGame}>
-        <Text style={styles.buttonText}>Play 3x3</Text>
-      </Button>
-      <Button onPress={goToNormal5x5Game}>
-        <Text style={styles.buttonText}>Play 5x5</Text>
-      </Button>
-      <Button onPress={goToNormal7x7Game}>
-        <Text style={styles.buttonText}>Play 7x7</Text>
-      </Button>
-      <Button onPress={goToCustom7x7Game}>
-        <Text style={styles.buttonText}>Play Custom 7x7</Text>
-      </Button>
+      <Link href="/normalGame" style={styles.buttonText}>
+        Play 3x3
+      </Link>
+      <Link href="/normal5x5Game" style={styles.buttonText}>
+        Play 5x5
+      </Link>
+      <Link href="/normal7x7Game" style={styles.buttonText}>
+        Play 7x7
+      </Link>
+      <Link href="/custom7x7Game" style={styles.buttonText}>
+        Play Custom 7x7
+      </Link>
       <Text style={styles.bottomText}>neillouis3</Text>
     </View>
   );
@@ -51,8 +39,10 @@ const styles = StyleSheet.create({
   },
 
   buttonText: {
-    color: 'white',
-    fontSize: 0,
+    color: 'blue',
+    fontSize: 18, // Set to a visible size
+    marginVertical: 10, // Add vertical margin for spacing between buttons
+    textDecorationLine: 'underline', // Optional: Add underline for links
   },
 
   bottomText: {
@@ -66,4 +56,3 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
-
