@@ -36,20 +36,31 @@ export default function EntryLayout() {
         },
         tabBarStyle: {
           backgroundColor: '#4299FF',
+
         },
       })}
     >
       <Tabs.Screen 
         name="(setting)"  
-        options={{ title: "Settings" }} 
+        options={{ 
+          title: "Settings", 
+          headerShown: false,
+        }} 
       />
       <Tabs.Screen 
         name="(game)"   
-        options={{ title: "Game" }}
+        options={{ 
+          title: "Game",
+          headerShown: false, 
+
+        }}
       />
       <Tabs.Screen 
         name="(profile)"   
-        options={{ title: "Profile" }}
+        options={{ 
+          title: "Profile", 
+          headerShown: false,
+        }}
       />
     </Tabs>
   );

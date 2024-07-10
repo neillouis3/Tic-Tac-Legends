@@ -6,13 +6,13 @@ import { ScrollView } from 'react-native-gesture-handler';
 export default function SettingScreen() {
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <View>
         <Text style={styles.nameTitle}>Settings</Text>
         
       </View>
       <Text style={styles.bottomText}>neillouis3</Text>
-    </ScrollView>
+    </View>
   );
 }
 
@@ -45,6 +45,12 @@ const styles = StyleSheet.create({
     color: '#4299FF',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  nameTitle: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: '#4299FF',
+    textAlign: 'center',
   },
 });
 

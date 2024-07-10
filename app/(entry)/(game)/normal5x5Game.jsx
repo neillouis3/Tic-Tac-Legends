@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, Text, Button, StyleSheet, Modal } from 'react-native';
-import Board from '@/components/modes/5x5/board';
-import GameLogic from '@/components/modes/5x5/gameLogic';
+import Board from '@/components/5x5/board';
+import GameLogic from '@/components/5x5/gameLogic';
 import { useNavigation } from '@react-navigation/native';
 import Svg, { Path } from 'react-native-svg';
 
