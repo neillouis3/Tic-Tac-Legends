@@ -5,6 +5,7 @@ import GameLogic from '@/components/7x7/gameLogic';
 import { useNavigation } from '@react-navigation/native';
 import Svg, { Path } from 'react-native-svg';
 import { Link } from 'expo-router';
+import { router } from 'expo-router';
 
 
 export default function Normal7x7Game() {
@@ -33,10 +34,12 @@ export default function Normal7x7Game() {
 
   return (
     <View style={styles.container}>
-      <Link href="/index" style={styles.backButton}>
-        <Svg height="48" width="48" viewBox="0 0 512 512">
-          <Path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="48" d="M244 400L100 256l144-144M120 256h292" />
-        </Svg>
+      <Link href={router.back}  asChild>
+        <TouchableOpacity style={styles.backButton}>
+          <Svg height="48" width="48" viewBox="0 0 512 512">
+            <Path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="48" d="M244 400L100 256l144-144M120 256h292" />
+          </Svg>
+        </TouchableOpacity>
       </Link>
       <Text style={styles.status}>{gameState.status}</Text>
       <Board board={gameState.board} handleCellClick={gameLogic.handleCellClick} />

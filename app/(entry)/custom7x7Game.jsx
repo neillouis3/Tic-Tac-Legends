@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Button, StyleSheet, TouchableOpacity, Modal } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
-import useCustom7x7GameLogic from '../../../components/mine7x7/custom7x7GameLogic';
-import Custom7x7Board from '../../../components/mine7x7/custom7x7Board';
+import useCustom7x7GameLogic from '@/components/mine7x7/custom7x7GameLogic';
+import Custom7x7Board from '@/components/mine7x7/custom7x7Board';
 import { Link } from 'expo-router';
+import { router } from 'expo-router';
 
 export default function Custom7x7Game({ navigation }) {
   const [gameState, setGameState] = useState({
@@ -42,10 +43,12 @@ export default function Custom7x7Game({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Link href="/index" style={styles.backButton}>
-        <Svg height="48" width="48" viewBox="0 0 512 512">
-          <Path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="48" d="M244 400L100 256l144-144M120 256h292" />
-        </Svg>
+      <Link href={router.back}  asChild>
+        <TouchableOpacity style={styles.backButton}>
+          <Svg height="48" width="48" viewBox="0 0 512 512">
+            <Path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="48" d="M244 400L100 256l144-144M120 256h292" />
+          </Svg>
+        </TouchableOpacity>
       </Link>
       <Text style={styles.status}>{gameState.status}</Text>
       <Custom7x7Board board={gameState.board} handleCellClick={gameLogic.handleCellClick} blockedSquares={gameState.blockedSquares} />
