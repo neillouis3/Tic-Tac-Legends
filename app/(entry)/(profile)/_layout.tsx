@@ -7,7 +7,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ProfileScreen from './index';
 
 const Stack = createNativeStackNavigator();
-export default function EntryLayout() {
+export default function ProfileLayout() {
   const colorScheme = useColorScheme();
 
   return (

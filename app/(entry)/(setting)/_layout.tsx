@@ -8,7 +8,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SettingScreen from './index';
 
 const Stack = createNativeStackNavigator();
-export default function EntryLayout() {
+export default function SettingLayout() {
   const colorScheme = useColorScheme();
 
   return (

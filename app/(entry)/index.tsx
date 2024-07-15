@@ -6,16 +6,16 @@ import { Link } from 'expo-router';
 export default function GameScreen({ navigation }: { navigation: any }) {
   return (
     <View style={styles.container}>
-      <Link href="/normalGame" style={styles.buttonText}>
+      <Link push href="/normalGame" style={styles.buttonText}>
         Play 3x3
       </Link>
-      <Link href="/normal5x5Game" style={styles.buttonText}>
+      <Link push href="/normal5x5Game" style={styles.buttonText}>
         Play 5x5
       </Link>
-      <Link href="/normal7x7Game" style={styles.buttonText}>
+      <Link push href="/normal7x7Game" style={styles.buttonText}>
         Play 7x7
       </Link>
-      <Link href="/custom7x7Game" style={styles.buttonText}>
+      <Link push href="/custom7x7Game" style={styles.buttonText}>
         Play Custom 7x7
       </Link>
       <Text style={styles.bottomText}>neillouis3</Text>
