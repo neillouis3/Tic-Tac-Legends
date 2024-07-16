@@ -3,7 +3,7 @@
 Things to do 
 - Fix routing issue --done
 - Button Sound Effects (mid)
-- Basic Styling for modes --in progress
+- Basic Styling for modes --in progress(priority)
 - Profile Screen  --in progress
   - Name
   - Age
