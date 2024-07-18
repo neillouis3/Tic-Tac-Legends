@@ -56,17 +56,17 @@ export default function Board({ board, handleCellClick }) {
 
 const styles = StyleSheet.create({
   board: {
-    width: 300,
-    height: 300,
-    backgroundColor: 'skyblue',
+    width: 350,
+    height: 350,
   },
   row: {
     flexDirection: 'row',
   },
   cell: {
-    width: 60,
-    height: 60,
-    backgroundColor: 'steelblue',
+    width: 50,
+    height: 50,
+    borderWidth: 1,
+    borderColor: '#000',
     justifyContent: 'center',
     alignItems: 'center',
   },

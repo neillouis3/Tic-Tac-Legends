@@ -10,10 +10,10 @@
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#4299FF"
     },
     "ios": {
-      "supportsTablet": true,
+      "supportsTablet": false,
       "bundleIdentifier": "com.neillouis3.TicTacLegends"
     },
     "android": {
@@ -34,5 +34,7 @@
     "experiments": {
       "typedRoutes": true
     }
+
+
   }
 }
