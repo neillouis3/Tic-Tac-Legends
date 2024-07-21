@@ -12,5 +12,5 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
-, "components/board3x3.jsx"  ]
+, "components/board3x3.jsx", "../All-In-One/all-in-one/_layout.tsx", "../All-In-One/all-in-one/_layout.tsx"  ]
 }

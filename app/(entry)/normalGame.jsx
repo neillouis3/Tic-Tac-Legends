@@ -16,8 +16,8 @@ export default function NormalGame() {
     winner: null,
   });
 
-  const handleGameUpdate = (state) => {
-    setGameState(state);
+  const handleGameUpdate = ({ board, status, player1Wins, player2Wins, winner }) => {
+    setGameState({ board, status, player1Wins, player2Wins, winner });
   };
 
   const gameLogic = GameLogic({ onGameUpdate: handleGameUpdate });
@@ -33,7 +33,7 @@ export default function NormalGame() {
 
   return (
     <View style={styles.container}>
-      <Link href={router.back}  asChild>
+      <Link href={router.back} asChild>
         <TouchableOpacity style={styles.backButton}>
           <Svg height="48" width="48" viewBox="0 0 512 512">
             <Path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="48" d="M244 400L100 256l144-144M120 256h292" />
@@ -51,7 +51,9 @@ export default function NormalGame() {
       >
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalText}>{gameState.winner} wins!</Text>
+            <Text style={styles.modalText}>
+              {gameState.winner === 'Draw' ? 'Game is a Draw!' : `${gameState.winner} wins!`}
+            </Text>
             <Button title="Play Again" onPress={handlePlayAgain} />
           </View>
         </View>

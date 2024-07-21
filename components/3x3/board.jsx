@@ -52,6 +52,6 @@ const styles = StyleSheet.create({
   },
   cellText: {
     fontSize: 48,
-    color: 'white',
+    color: 'blue',
   },
 });
