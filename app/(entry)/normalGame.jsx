@@ -3,8 +3,8 @@ import { View, Text, Button,  TouchableOpacity, StyleSheet, Modal } from 'react-
 import Board from '@/components/3x3/board';
 import GameLogic from '@/components/3x3/gameLogic';
 import Svg, { Path } from 'react-native-svg';
-import { Link } from 'expo-router';
-import { router } from 'expo-router';
+import { Link, router } from 'expo-router';
+
 
 
 export default function NormalGame() {
@@ -34,41 +34,76 @@ export default function NormalGame() {
   return (
     <View style={styles.container}>
       <Link href={router.back} asChild>
-        <TouchableOpacity style={styles.backButton}>
-          <Svg height="48" width="48" viewBox="0 0 512 512">
-            <Path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="48" d="M244 400L100 256l144-144M120 256h292" />
-          </Svg>
-        </TouchableOpacity>
-      </Link>
-      <Text style={styles.status}>{gameState.status}</Text>
-      <Board board={gameState.board} handleCellClick={gameLogic.handleCellClick} />
-      <Text>Player 1 Wins: {gameState.player1Wins}</Text>
-      <Text>Player 2 Wins: {gameState.player2Wins}</Text>
-      <Modal
-        visible={gameState.winner !== null}
-        transparent={true}
-        animationType="slide"
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalText}>
-              {gameState.winner === 'Draw' ? 'Game is a Draw!' : `${gameState.winner} wins!`}
-            </Text>
-            <Button title="Play Again" onPress={handlePlayAgain} />
-          </View>
+          <TouchableOpacity style={styles.backButton}>
+            <Svg height="48" width="48" viewBox="0 0 512 512">
+              <Path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="48" d="M244 400L100 256l144-144M120 256h292" />
+            </Svg>
+          </TouchableOpacity>
+        </Link>
+      <View style={styles.majorContentContainer}>
+        <View style={styles.statContainer}>
+          <Text style={styles.status}>{gameState.status}</Text>
+          <Text>Player 1 Wins: {gameState.player1Wins}</Text>
+          <Text>Player 2 Wins: {gameState.player2Wins}</Text>
         </View>
-      </Modal>
+
+        <View style={styles.boardContainer}>
+          <Board board={gameState.board} handleCellClick={gameLogic.handleCellClick} />
+        </View>
+      </View>
+      <View style={styles.tabBarContainer}>
+      </View>
+        <Modal
+          visible={gameState.winner !== null}
+          transparent={true}
+          animationType="slide"
+        >
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalText}>
+                {gameState.winner === 'Draw' ? 'Game is a Draw!' : `${gameState.winner} wins!`}
+              </Text>
+              <Button title="Play Again" onPress={handlePlayAgain} />
+            </View>
+          </View>
+        </Modal>
+
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1
+  },
+  majorContentContainer: {
+    flex: 11,
+    padding: 20,
+    alignItems: 'center',
+  },
+
+  tabBarContainer: {
     flex: 1,
+    backgroundColor: 'blue',
+  },
+
+  statContainer: {
+    backgroundColor: '#4299FF',
+    width: '100%',
+    borderRadius: 8,
+    padding: 16,
+  },
+
+  boardContainer: {
+    marginTop: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    width: '100%',
+    height: 300,
+    borderRadius: 8,
+
   },
+
   status: {
     fontSize: 24,
     marginBottom: 10,
@@ -77,7 +112,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
     width: 300,

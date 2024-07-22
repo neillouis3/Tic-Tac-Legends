@@ -36,22 +36,28 @@ export default function Board({ board, handleCellClick }) {
 
 const styles = StyleSheet.create({
   board: {
-    width: 350,
-    height: 350,
   },
   row: {
+    flexWrap: 'wrap',
     flexDirection: 'row',
+    gap: 4,
+    margin: 2,
   },
   cell: {
     width: 50,
     height: 50,
-    borderWidth: 1,
-    borderColor: '#000',
+    borderWidth: 2,
+    borderColor: '#4299FF',
+    borderRadius: 4,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'white',
   },
   cellText: {
     fontSize: 48,
-    color: 'blue',
+    fontWeight: 'bold',
+    color: '#FBB64E',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
