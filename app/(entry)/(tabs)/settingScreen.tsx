@@ -1,16 +1,70 @@
-import { ImageBackground, Image, StyleSheet, Platform, TouchableOpacity } from 'react-native';
-import Button from '@/components/ui/Button';
+import { StyleSheet, Platform, Pressable, Linking } from 'react-native';
 import { View, Text } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+
 
 export default function SettingScreen() {
-
+  const openPrivatePolicy = () => {
+    Linking.openURL('https://neillouis3.vercel.app/privatePolicy');
+  };
   return (
     <View style={styles.container}>
-      <View>
-        <Text style={styles.nameTitle}>Settings</Text>
-        
+      <Text style={styles.nameTitle}>Settings</Text>
+      <View style={styles.minorContainer}>
+        <Text style={styles.subTitle}>Account</Text>
+        <Text>
+          To be added
+        </Text>
       </View>
+      <View style={styles.minorContainer}>
+        <Text style={styles.subTitle}>Game</Text>
+      </View>
+      <View style={styles.minorContainer}>
+        <Text style={styles.subTitle}>Information</Text>
+        <View style={styles.minorContent}>
+          <Text>
+            Help & Support
+          </Text>
+          <Pressable style={styles.minorContentBtn}>
+            <Text>
+              Contact Us
+            </Text>
+          </Pressable>
+        </View>
+
+        <View style={styles.minorContent}>
+          <Text>
+            Private Policy
+          </Text>
+          <Pressable style={styles.minorContentBtn} onPress={openPrivatePolicy}>
+            <Text>
+              View
+            </Text>
+          </Pressable>
+        </View>
+        
+        <View style={styles.minorContent}>
+          <Text>
+            Credits
+          </Text>
+          <Pressable style={styles.minorContentBtn}>
+            <Text>
+              View
+            </Text>
+          </Pressable>
+        </View>        
+        
+        <View style={styles.minorContent}>
+          <Text>
+            Version
+          </Text>
+          <Text>
+              1.0
+          </Text>
+
+        </View>
+
+      </View>
+
       <Text style={styles.bottomText}>neillouis3</Text>
     </View>
   );
@@ -19,22 +73,33 @@ export default function SettingScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
     padding: 20,
+    gap: 20,
   },
 
-  logo: {
-    aspectRatio: 0.75,
-    marginBottom: 150, // Adjust this value as needed
-    marginTop: -150, // Move the logo higher by using a negative marginTop
-    resizeMode: 'contain',
+  minorContainer: {
+    borderWidth: 1,
+    borderRadius: 8,
+    padding: 8,
+    gap: 8,
+  },
+  minorContent: {
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    
   },
 
-  buttonText: {
-    color: 'white',
-    fontSize: 0,
+  minorContentBtn: {
+    padding: 2,
+    width: 100,
+    borderRadius: 12,
+    backgroundColor: '#4299FF',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
+
 
   bottomText: {
     position: 'absolute',
@@ -47,10 +112,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   nameTitle: {
-    fontSize: 30,
+    fontSize: 24,
     fontWeight: 'bold',
-    color: '#4299FF',
-    textAlign: 'center',
+    color: 'black',
   },
+
+  subTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  }
 });
 
