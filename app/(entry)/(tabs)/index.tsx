@@ -45,10 +45,17 @@ export default function GameScreen({ navigation }: { navigation: any }) {
 
       <View style={styles.modeContainer}>
         <Text style={styles.modeTitle}>Custom Modes</Text>
-        <Pressable style={styles.modesBtn} onPress={toggleModal}>
+
+        <ScrollView 
+          horizontal={true}           
+          showsHorizontalScrollIndicator={false}
+          centerContent={true} 
+          style={styles.modeContentContainer} 
+          contentContainerStyle={styles.modeContent}
+        >
+          <Pressable style={styles.modesBtn} onPress={toggleModal}>
             <Text>Create Custom Game</Text>
           </Pressable>
-        <ScrollView horizontal={true} style={styles.modeContentContainer} contentContainerStyle={styles.modeContent}>
           <Pressable style={styles.modesBtn} onPress={toggleModal}>
             <Text>3x3</Text>
           </Pressable>
