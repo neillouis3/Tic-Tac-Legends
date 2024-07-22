@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Pressable, Button } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Button, ScrollView } from 'react-native';
 import { Link } from 'expo-router';
 import ComingSoonModal from '@/components/ui/comingSoonModal'; // Adjust the path as needed
 

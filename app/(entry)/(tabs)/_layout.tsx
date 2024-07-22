@@ -19,7 +19,7 @@ export default function EntryLayout() {
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, size }) => {
           let IconComponent: React.FC<SvgProps>;
-          let iconColor = focused ? 'blue' : 'gray'; // Change colors as needed
+          let iconColor = focused ? '#4299FF' : '#D9D9D9'; // Change colors as needed
 
           if (route.name === 'index') {
             IconComponent = focused ? GameIcon : GameOutlineIcon;
@@ -31,11 +31,9 @@ export default function EntryLayout() {
             return null;
           }
 
-          return <IconComponent width={size} height={size} fill={iconColor} />;
+          return <IconComponent width={size} height={size} color='#D9D9D9' fill={iconColor} />;
         },
-        tabBarLabelStyle: {
-          color: 'white',
-        },
+
         tabBarStyle: {
           backgroundColor: '#ffffff',
         },

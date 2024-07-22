@@ -10,11 +10,14 @@ export default function ProfileScreen({ navigation }: { navigation: any }) {
       <View style={styles.porfileBanner}>
         <View style={styles.personalInfoContentContainer}>
           <View style={styles.playerAvatar}>
-            <Text>Placeholder</Text>
+            <Image 
+              source={require('@/assets/icons/placeholder.jpg')}
+              style={{width: '100%', height: '100%'}}
+            />
           </View>
           <View style={styles.personalInfoMainContentContainer}>
-            <Text style={styles.nameTitle}>neillouis3</Text>
-            <Text style={styles.uniqueID}>unique-id</Text>
+            <Text style={styles.nameTitle}>Guest</Text>
+            <Text style={styles.uniqueID}>0000-0001</Text>
           </View>
         </View>
 
@@ -33,8 +36,6 @@ export default function ProfileScreen({ navigation }: { navigation: any }) {
         <Text style={styles.subTitle}>Achievement</Text>
         <Text>Coming soon</Text>
       </View>
-
-      <Text style={styles.bottomText}>neillouis3</Text>
     </View>
   );
 }
@@ -51,7 +52,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 16,
     width: '100%',
-    height: 'fit',
+    height: 'auto',
   },
 
   personalInfoContentContainer: {
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
   },
 
   personalInfoMainContentContainer: {
-    width: 'fit',
+    width: 'auto',
   },
 
   playerAvatar: {
@@ -79,6 +80,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 16,
 
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 3.84,
+    elevation: 5,
+    backgroundColor: 'white',
+
   },
 
   achievementContainer: {
@@ -86,19 +94,13 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     borderWidth: 1,
     padding: 16,
-  },
 
-
-  bottomText: {
-    position: 'absolute',
-    bottom: 15,
-    left: 0,
-    right: 0,
-    textAlign: 'center',
-    color: '#4299FF',
-    fontSize: 16,
-    fontWeight: 'bold',
-
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 3.84,
+    elevation: 5,
+    backgroundColor: 'white',
   },
 
   nameTitle: {
@@ -116,6 +118,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#fff',
     marginTop: 20,
+  },
+
+  levelContainer: {
   },
   levelBarContainer: {
     width: '100%',
