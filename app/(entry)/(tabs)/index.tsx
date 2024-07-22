@@ -11,13 +11,19 @@ export default function GameScreen({ navigation }: { navigation: any }) {
   };
 
   return (
-    <ScrollView style={styles.contentContainer}>
+    <ScrollView contentContainerStyle={styles.contentContainer}>
       <View style={styles.titleContainer}>
         <Text style={styles.titleText}>Play</Text>
       </View>
       <View style={styles.modeContainer}>
         <Text style={styles.modeTitle}>Normal Modes</Text>
-        <View style={styles.modeContentContainer}>
+        <ScrollView 
+          horizontal={true} 
+          showsHorizontalScrollIndicator={false}
+          centerContent={true}
+          style={styles.modeContentContainer}
+          contentContainerStyle={styles.modeContent}
+        >
           <Link href="/normalGame" asChild>
             <Pressable style={styles.modesBtn}>
               <Text>3x3</Text>
@@ -34,12 +40,15 @@ export default function GameScreen({ navigation }: { navigation: any }) {
               <Text>7x7</Text>
             </Pressable>
           </Link>
-        </View>
+        </ScrollView>
       </View>
 
       <View style={styles.modeContainer}>
         <Text style={styles.modeTitle}>Custom Modes</Text>
-        <View style={styles.modeContentContainer}>
+        <Pressable style={styles.modesBtn} onPress={toggleModal}>
+            <Text>Create Custom Game</Text>
+          </Pressable>
+        <ScrollView horizontal={true} style={styles.modeContentContainer} contentContainerStyle={styles.modeContent}>
           <Pressable style={styles.modesBtn} onPress={toggleModal}>
             <Text>3x3</Text>
           </Pressable>
@@ -49,7 +58,7 @@ export default function GameScreen({ navigation }: { navigation: any }) {
           <Pressable style={styles.modesBtn} onPress={toggleModal}>
             <Text>3x3</Text>
           </Pressable>
-        </View>
+        </ScrollView>
       </View>
 
       <Text style={styles.bottomText}>neillouis3</Text>
@@ -66,22 +75,22 @@ const styles = StyleSheet.create({
   },
 
   modeContainer:{
-    height: 400,
+    height: 'auto',
+    justifyContent: 'center',
   },
-
-
-
   modeTitle: {
     fontSize: 16,
-    marginBottom: 16,
+    marginBottom: 10,
   },
 
   modeContentContainer: {
-    flexWrap: 'wrap',
-    flexDirection: 'row', 
-    gap: 32,
+    height: 200,
 
+    
   },
+
+  modeContent: {
+  }, 
   bottomText: {
 
 
@@ -108,5 +117,6 @@ const styles = StyleSheet.create({
     padding: 10,
     width: 150,
     height: 150,
+    marginRight: 10,
   },
 });
