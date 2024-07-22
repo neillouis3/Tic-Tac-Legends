@@ -11,24 +11,25 @@ export default function GameScreen({ navigation }: { navigation: any }) {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.contentContainer}>
       <View style={styles.titleContainer}>
         <Text style={styles.titleText}>Play</Text>
       </View>
-      <View>
-        <Text>Normal Modes</Text>
-        <View>
-          <Link href="/normalGame" style={styles.linkButton} asChild>
+      <View style={styles.modeContainer}>
+        <Text style={styles.modeTitle}>Normal Modes</Text>
+        <View style={styles.modeContentContainer}>
+          <Link href="/normalGame" asChild>
             <Pressable style={styles.modesBtn}>
               <Text>3x3</Text>
+              <Text>Classic game of tic tac toe</Text>
             </Pressable>
           </Link>
-          <Link href="/normal5x5Game" style={styles.linkButton} asChild>
+          <Link href="/normal5x5Game" asChild>
             <Pressable style={styles.modesBtn}>
               <Text>5x5</Text>
             </Pressable>
           </Link>
-          <Link href="/normal7x7Game" style={styles.linkButton} asChild>
+          <Link href="/normal7x7Game" asChild>
             <Pressable style={styles.modesBtn}>
               <Text>7x7</Text>
             </Pressable>
@@ -36,9 +37,9 @@ export default function GameScreen({ navigation }: { navigation: any }) {
         </View>
       </View>
 
-      <View>
-        <Text>Custom Modes</Text>
-        <View>
+      <View style={styles.modeContainer}>
+        <Text style={styles.modeTitle}>Custom Modes</Text>
+        <View style={styles.modeContentContainer}>
           <Pressable style={styles.modesBtn} onPress={toggleModal}>
             <Text>3x3</Text>
           </Pressable>
@@ -54,20 +55,36 @@ export default function GameScreen({ navigation }: { navigation: any }) {
       <Text style={styles.bottomText}>neillouis3</Text>
 
       <ComingSoonModal isModalVisible={isModalVisible} toggleModal={toggleModal} />
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  contentContainer: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
     padding: 20,
   },
+
+  modeContainer:{
+    height: 400,
+  },
+
+
+
+  modeTitle: {
+    fontSize: 16,
+    marginBottom: 16,
+  },
+
+  modeContentContainer: {
+    flexWrap: 'wrap',
+    flexDirection: 'row', 
+    gap: 32,
+
+  },
   bottomText: {
-    position: 'absolute',
-    bottom: 15,
+
+
     left: 0,
     right: 0,
     textAlign: 'center',
@@ -75,10 +92,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
-  linkButton: {
-    marginTop: 15,
-    paddingVertical: 15,
-  },
+
   titleContainer: {
     marginBottom: 20,
   },
@@ -92,7 +106,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 10,
-    width: 200,
-    marginVertical: 5, // Add some vertical spacing between buttons
+    width: 150,
+    height: 150,
   },
 });

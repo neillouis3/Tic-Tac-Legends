@@ -7,15 +7,17 @@ interface ComingSoonModalProps {
   toggleModal: () => void;
 }
 
-const ComingSoonModal: React.FC<ComingSoonModalProps> = ({ isModalVisible, toggleModal }) => {
+const ComingSoonModal: React.FC<ComingSoonModalProps> = ({
+  isModalVisible,
+  toggleModal,
+}) => {
   return (
-    <Modal 
-      isVisible={isModalVisible} 
+    <Modal
+      isVisible={isModalVisible}
       onBackdropPress={toggleModal}
       backdropTransitionOutTiming={0}
       backdropOpacity={0.7}
-      backdropColor="#000"
-    >
+      backdropColor="#000">
       <View style={styles.modalContent}>
         <Text style={styles.modalText}>Coming Soon</Text>
         <Button title="Close" onPress={toggleModal} />
