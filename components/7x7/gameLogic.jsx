@@ -6,14 +6,15 @@ export default function GameLogic({ onGameUpdate }) {
   const [gameOver, setGameOver] = useState(false);
   const [player1Wins, setPlayer1Wins] = useState(0);
   const [player2Wins, setPlayer2Wins] = useState(0);
+  const [player1Symbol, setPlayer1Symbol] = useState('X'); // Default symbol for Player 1 is 'X'
 
   useEffect(() => {
     const winner = calculateWinner(board);
     let status;
     if (winner) {
-      status = 'Winner: ' + (winner === 'X' ? 'Player 1' : 'Player 2');
+      status = 'Winner: ' + (winner === player1Symbol ? 'Player 1' : 'Player 2');
       setGameOver(true);
-      if (winner === 'X') {
+      if (winner === player1Symbol) {
         setPlayer1Wins(player1Wins + 1);
       } else {
         setPlayer2Wins(player2Wins + 1);
@@ -21,12 +22,12 @@ export default function GameLogic({ onGameUpdate }) {
       onGameUpdate({
         board,
         status,
-        player1Wins: player1Wins + (winner === 'X' ? 1 : 0),
-        player2Wins: player2Wins + (winner === 'O' ? 1 : 0),
-        winner: winner === 'X' ? 'Player 1' : 'Player 2'
+        player1Wins: player1Wins + (winner === player1Symbol ? 1 : 0),
+        player2Wins: player2Wins + (winner !== player1Symbol ? 1 : 0),
+        winner: winner === player1Symbol ? 'Player 1' : 'Player 2'
       });
     } else {
-      status = 'Next player: ' + (isXNext ? 'Player 1 (X)' : 'Player 2 (O)');
+      status = 'Next player: ' + (isXNext ? (player1Symbol === 'X' ? 'Player 1 (X)' : 'Player 2 (X)') : (player1Symbol === 'O' ? 'Player 1 (O)' : 'Player 2 (O)'));
       onGameUpdate({ board, status, player1Wins, player2Wins, winner: null });
     }
   }, [board]);
@@ -34,7 +35,7 @@ export default function GameLogic({ onGameUpdate }) {
   const handleCellClick = (index) => {
     if (board[index] || gameOver) return;
     const newBoard = [...board];
-    newBoard[index] = isXNext ? 'X' : 'O';
+    newBoard[index] = isXNext ? player1Symbol : (player1Symbol === 'X' ? 'O' : 'X');
     setBoard(newBoard);
     setIsXNext(!isXNext);
   };
@@ -60,5 +61,10 @@ export default function GameLogic({ onGameUpdate }) {
     setGameOver(false);
   };
 
-  return { board, handleCellClick, resetGame };
+  const chooseSymbol = (symbol) => {
+    setPlayer1Symbol(symbol);
+    resetGame();
+  };
+
+  return { board, handleCellClick, resetGame, chooseSymbol, player1Symbol };
 }
