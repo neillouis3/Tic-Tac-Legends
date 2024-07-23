@@ -5,7 +5,7 @@ import Modal from 'react-native-modal';
 interface ResultModalProps {
   isModalVisible: boolean;
   toggleModal: () => void;
-  winner: string;
+  winner: string | null;
 }
 
 const ResultModal: React.FC<ResultModalProps> = ({

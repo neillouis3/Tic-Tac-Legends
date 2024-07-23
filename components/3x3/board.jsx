@@ -1,11 +1,12 @@
 import React from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 
-export default function Board({ board, handleCellClick }) {
+export default function Board({ board, handleCellClick, width }) {
   const renderCell = (index) => {
     return (
       <TouchableOpacity 
-        style={styles.cell} 
+        key={index}
+        style={[styles.cell, { width: width / 3.5, height: width / 3.5, margin: 4 }]} 
         onPress={() => handleCellClick(index)}
       >
         <Text style={styles.cellText}>{board[index]}</Text>
@@ -36,21 +37,25 @@ export default function Board({ board, handleCellClick }) {
 
 const styles = StyleSheet.create({
   board: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   row: {
-    flexWrap: 'wrap',
     flexDirection: 'row',
-    gap: 4,
-    margin: 2,
   },
   cell: {
-    width: 50,
-    height: 50,
     borderWidth: 2,
     borderColor: '#4299FF',
     borderRadius: 4,
     justifyContent: 'center',
     alignItems: 'center',
+
+
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 3.84,
+    elevation: 5,
     backgroundColor: 'white',
   },
   cellText: {

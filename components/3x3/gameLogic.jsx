@@ -7,45 +7,47 @@ export default function GameLogic({ onGameUpdate }) {
   const [player1Wins, setPlayer1Wins] = useState(0);
   const [player2Wins, setPlayer2Wins] = useState(0);
   const [player1Symbol, setPlayer1Symbol] = useState('X'); // Default symbol for Player 1 is 'X'
+  const player2Symbol = player1Symbol === 'X' ? 'O' : 'X'; // Player 2 symbol is the opposite
+  const [winner, setWinner] = useState(null);
 
   useEffect(() => {
-    const winner = calculateWinner(board);
-    let status;
-    if (winner) {
-      status = 'Winner: ' + (winner === player1Symbol ? 'Player 1' : 'Player 2');
+    const gameWinner = calculateWinner(board);
+    let currentPlayerTurn;
+    if (gameWinner) {
+      currentPlayerTurn = gameWinner === player1Symbol ? 'Player 1' : 'Player 2';
       setGameOver(true);
-      if (winner === player1Symbol) {
+      if (gameWinner === player1Symbol) {
         setPlayer1Wins(player1Wins + 1);
+        setWinner('Player 1');
       } else {
         setPlayer2Wins(player2Wins + 1);
+        setWinner('Player 2');
       }
-      onGameUpdate && onGameUpdate({
-        board,
-        status,
-        player1Wins: player1Wins + (winner === player1Symbol ? 1 : 0),
-        player2Wins: player2Wins + (winner !== player1Symbol ? 1 : 0),
-        winner: winner === player1Symbol ? 'Player 1' : 'Player 2'
-      });
-    } else if (isBoardFull(board)) {
-      status = 'Draw!';
+    } else if (!board.includes(null)) {
+      currentPlayerTurn = 'Draw';
       setGameOver(true);
-      onGameUpdate && onGameUpdate({
-        board,
-        status,
-        player1Wins,
-        player2Wins,
-        winner: 'Draw'
-      });
+      setWinner('Draw');
     } else {
-      status = 'Next player: ' + (isXNext ? (player1Symbol === 'X' ? 'Player 1 (X)' : 'Player 2 (X)') : (player1Symbol === 'O' ? 'Player 1 (O)' : 'Player 2 (O)'));
-      onGameUpdate && onGameUpdate({ board, status, player1Wins, player2Wins, winner: null });
+      currentPlayerTurn = isXNext ? 'Player 1' : 'Player 2';
+      setWinner(null);
     }
+
+    console.log('Updating game state:', { board, currentPlayerTurn, player1Wins, player2Wins, winner: gameWinner, player1Symbol, player2Symbol });
+    onGameUpdate({
+      board,
+      currentPlayerTurn,
+      player1Wins,
+      player2Wins,
+      winner: gameWinner ? (gameWinner === player1Symbol ? 'Player 1' : 'Player 2') : null,
+      player1Symbol,
+      player2Symbol
+    });
   }, [board]);
 
   const handleCellClick = (index) => {
     if (board[index] || gameOver) return;
     const newBoard = [...board];
-    newBoard[index] = isXNext ? player1Symbol : (player1Symbol === 'X' ? 'O' : 'X');
+    newBoard[index] = isXNext ? player1Symbol : player2Symbol;
     setBoard(newBoard);
     setIsXNext(!isXNext);
   };
@@ -65,14 +67,11 @@ export default function GameLogic({ onGameUpdate }) {
     return null;
   };
 
-  const isBoardFull = (squares) => {
-    return squares.every(square => square !== null);
-  };
-
   const resetGame = () => {
     setBoard(Array(9).fill(null));
     setIsXNext(true);
     setGameOver(false);
+    setWinner(null);
   };
 
   const chooseSymbol = (symbol) => {
@@ -80,5 +79,5 @@ export default function GameLogic({ onGameUpdate }) {
     resetGame();
   };
 
-  return { board, handleCellClick, resetGame, chooseSymbol, player1Symbol };
+  return { board, handleCellClick, resetGame, chooseSymbol, player1Symbol, player2Symbol };
 }

@@ -33,7 +33,7 @@ export default function ProfileScreen({ navigation }: { navigation: any }) {
         <Text>Coming soon</Text>
       </View>
       <View style={styles.achievementContainer}>
-        <Text style={styles.subTitle}>Achievement</Text>
+        <Text style={styles.subTitle}>Achievements</Text>
         <Text>Coming soon</Text>
       </View>
     </View>
@@ -53,6 +53,13 @@ const styles = StyleSheet.create({
     padding: 16,
     width: '100%',
     height: 'auto',
+
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 3.84,
+    elevation: 5,
+
   },
 
   personalInfoContentContainer: {
@@ -67,7 +74,6 @@ const styles = StyleSheet.create({
   },
 
   playerAvatar: {
-    backgroundColor: 'gray',
     borderRadius: 8,
     width: 75,
     height: 75,
@@ -76,31 +82,17 @@ const styles = StyleSheet.create({
 
   bonusContainer: {
     borderRadius: 8,
-    borderColor: 'black',
-    borderWidth: 1,
-    padding: 16,
 
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.5,
-    shadowRadius: 3.84,
-    elevation: 5,
-    backgroundColor: 'white',
+    padding: 16,
+    backgroundColor: '#fff',
 
   },
 
   achievementContainer: {
     borderRadius: 8,
-    borderColor: 'black',
-    borderWidth: 1,
-    padding: 16,
 
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.5,
-    shadowRadius: 3.84,
-    elevation: 5,
-    backgroundColor: 'white',
+    padding: 16,
+    backgroundColor: '#fff',
   },
 
   nameTitle: {

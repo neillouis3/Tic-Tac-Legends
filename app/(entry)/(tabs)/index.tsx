@@ -56,19 +56,17 @@ export default function GameScreen({ navigation }: { navigation: any }) {
           <Pressable style={styles.modesBtn} onPress={toggleModal}>
             <Text>Create Custom Game</Text>
           </Pressable>
+          <Link href="/normal7x7Game" asChild>
+            <Pressable style={styles.modesBtn}>
+              <Text>7x7</Text>
+              <Text>Board with blocked cells</Text>
+            </Pressable>
+          </Link>
           <Pressable style={styles.modesBtn} onPress={toggleModal}>
-            <Text>3x3</Text>
-          </Pressable>
-          <Pressable style={styles.modesBtn} onPress={toggleModal}>
-            <Text>3x3</Text>
-          </Pressable>
-          <Pressable style={styles.modesBtn} onPress={toggleModal}>
-            <Text>3x3</Text>
+            <Text>More Coming Soon</Text>
           </Pressable>
         </ScrollView>
       </View>
-
-      <Text style={styles.bottomText}>neillouis3</Text>
 
       <ComingSoonModal isModalVisible={isModalVisible} toggleModal={toggleModal} />
     </ScrollView>
@@ -92,7 +90,7 @@ const styles = StyleSheet.create({
 
   modeContentContainer: {
     height: 200,
-
+    
     
   },
 
@@ -117,7 +115,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   modesBtn: {
-    backgroundColor: '#007bff',
+    backgroundColor: '#4299FF',
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
@@ -125,5 +123,11 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
     marginRight: 10,
+
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
 });
