@@ -105,6 +105,7 @@ export default function NormalGame() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: 50,
   },
   majorContentContainer: {
     flex: 11,
@@ -127,7 +128,7 @@ const styles = StyleSheet.create({
   playerStatContainer: {
     backgroundColor: '#fff',
     paddingHorizontal: 16,
-    paddingVertical: 24,
+    paddingVertical: 18,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 16,
@@ -137,7 +138,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   boardContainer: {
-    marginTop: 50,
+    marginTop: 25,
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',

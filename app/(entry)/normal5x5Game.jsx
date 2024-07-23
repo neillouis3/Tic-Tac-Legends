@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, Text, Button, StyleSheet, Modal } from 'react-native';
+import { View, TouchableOpacity, Text, Button, StyleSheet, Modal, Image } from 'react-native';
 import Board from '@/components/5x5/board';
 import GameLogic from '@/components/5x5/gameLogic';
-import Svg, { Path } from 'react-native-svg';
-import { Link } from 'expo-router';
-import { router } from 'expo-router';
-
+import ResultModal from '@/components/ui/resultModal';
 
 export default function Normal5x5Game() {
   const [gameState, setGameState] = useState({
@@ -19,6 +16,8 @@ export default function Normal5x5Game() {
   const handleGameUpdate = (state) => {
     setGameState(state);
   };
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [boardWidth, setBoardWidth] = useState(0);
 
   const gameLogic = GameLogic({ onGameUpdate: handleGameUpdate });
 
@@ -31,66 +30,114 @@ export default function Normal5x5Game() {
     }));
   };
 
+  const isPlayer1Turn = gameState.currentPlayerTurn === 'Player 1';
+  const isPlayer2Turn = gameState.currentPlayerTurn === 'Player 2';
+
   return (
-    <View style={styles.container}>
-      <Link href={router.back}  asChild>
-        <TouchableOpacity style={styles.backButton}>
-          <Svg height="48" width="48" viewBox="0 0 512 512">
-            <Path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="48" d="M244 400L100 256l144-144M120 256h292" />
-          </Svg>
-        </TouchableOpacity>
-      </Link>
-      <Text style={styles.status}>{gameState.status}</Text>
-      <Board board={gameState.board} handleCellClick={gameLogic.handleCellClick} />
-      <Text>Player 1 Wins: {gameState.player1Wins}</Text>
-      <Text>Player 2 Wins: {gameState.player2Wins}</Text>
-      <Modal
-        visible={gameState.winner !== null}
-        transparent={true}
-        animationType="slide"
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalText}>{gameState.winner} wins!</Text>
-            <Button title="Play Again" onPress={handlePlayAgain} />
+  <View style={styles.container}>
+    <View style={styles.majorContentContainer}>
+      <View style={styles.statContainer}>
+        <View style={[
+          styles.player1StatContainer,
+          styles.playerStatContainer,
+          { flex: 1 },
+          isPlayer1Turn && { borderColor: 'yellow', borderWidth: 2 }
+        ]}>
+          <View style={[styles.player1Avatar, styles.playerAvatar]}>
+            <Image 
+              source={require('@/assets/icons/player1Avatar.jpg')}
+              style={{width: '100%', height: '100%', borderRadius: 8}}
+            />
           </View>
+          <Text style={{textAlign: 'center', marginTop: 10}}>Player 1</Text>
         </View>
-      </Modal>
+        <View style={[styles.statusContainer, { flex: 1.5 }]}>
+          <View style={{flexWrap: 'wrap', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+            <Text style={{fontSize: 32, marginRight: 10, fontWeight: 'bold'}}>{gameState.player1Symbol}</Text>
+            <Text>:</Text>
+            <Text style={{fontSize: 32, marginLeft: 10, fontWeight: 'bold'}}>{gameState.player2Symbol}</Text>
+          </View>
+          <Text>{gameState.player1Wins}:{gameState.player2Wins}</Text>
+        </View>
+        <View style={[
+          styles.player2StatContainer,
+          styles.playerStatContainer,
+          { flex: 1 },
+          isPlayer2Turn && { borderColor: 'yellow', borderWidth: 2 }
+        ]}>
+          <View style={[styles.player2Avatar, styles.playerAvatar]}>
+            <Image 
+              source={require('@/assets/icons/player2Avatar.jpg')}
+              style={{width: '100%', height: '100%', borderRadius: 8}}
+            />
+          </View>
+          <Text style={{textAlign: 'center', marginTop: 10}}>Player 2</Text>
+        </View>
+      </View>
+
+      <View style={styles.boardContainer} onLayout={(event) => {
+          const { width } = event.nativeEvent.layout;
+          setBoardWidth(width);
+        }}
+      >
+        <Board width={boardWidth} board={gameState.board} handleCellClick={gameLogic.handleCellClick} />
+      </View>
     </View>
+    <ResultModal
+      isModalVisible={isModalVisible}
+      toggleModal={handlePlayAgain}
+      winner={gameState.winner}
+    />
+  </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  majorContentContainer: {
+    flex: 11,
+    padding: 20,
+    alignItems: 'center',
+  },
+  statContainer: {
+    width: '100%',
+    height: 'auto',
+    borderRadius: 8,
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  playerAvatar: {
+    width: 50,
+    height: 50,
+    borderRadius: 50, 
+  },
+  playerStatContainer: {
+    backgroundColor: '#fff',
+    paddingHorizontal: 16,
+    paddingVertical: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 16,
+  },
+  statusContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+  },
+  boardContainer: {
+    marginTop: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: 'auto',
+    borderRadius: 8,
+    backgroundColor: '#4299FF',
+    paddingVertical: 16,
   },
   status: {
     fontSize: 24,
     marginBottom: 10,
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  modalContent: {
-    width: 300,
-    padding: 20,
-    backgroundColor: 'white',
-    borderRadius: 10,
-    alignItems: 'center',
-  },
-  modalText: {
-    fontSize: 24,
-    marginBottom: 20,
-  },
-  backButton: {
-    position: 'absolute',
-    top: 40,
-    left: 20,
   },
 });

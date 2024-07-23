@@ -9,6 +9,7 @@ export default function Custom7x7Board({ board, handleCellClick, blockedSquares 
           key={index}
           style={[
             styles.cell,
+            { width: width / 3.5, height: width / 3.5, margin: 4 },
             blockedSquares.includes(index) && styles.blockedCell,
           ]}
           onPress={() => handleCellClick(index)}
@@ -23,23 +24,32 @@ export default function Custom7x7Board({ board, handleCellClick, blockedSquares 
 
 const styles = StyleSheet.create({
   board: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    width: 350,
-    height: 350,
-  },
-  cell: {
-    width: 50,
-    height: 50,
-    borderWidth: 1,
-    borderColor: '#000',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  cell: {
+    borderWidth: 2,
+    borderColor: '#4299FF',
+    borderRadius: 4,
+    justifyContent: 'center',
+    alignItems: 'center',
+
+
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 3.84,
+    elevation: 5,
+    backgroundColor: 'white',
   },
   blockedCell: {
     backgroundColor: '#ccc',
   },
   cellText: {
-    fontSize: 24,
+    fontSize: 48,
+    fontWeight: 'bold',
+    color: '#FBB64E',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
