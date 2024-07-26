@@ -48,6 +48,7 @@ export default function GameScreen({ navigation }: { navigation: any }) {
         <Pressable style={styles.modesBtn} onPress={toggleModal}>
             <Text>Create Custom Game</Text>
           </Pressable>
+        <ScrollView horizontal={true} style={styles.modeContentContainer} contentContainerStyle={styles.modeContent}>
           <Pressable style={styles.modesBtn} onPress={toggleModal}>
             <Text>3x3</Text>
           </Pressable>
