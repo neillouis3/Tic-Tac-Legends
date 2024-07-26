@@ -45,15 +45,7 @@ export default function GameScreen({ navigation }: { navigation: any }) {
 
       <View style={styles.modeContainer}>
         <Text style={styles.modeTitle}>Custom Modes</Text>
-
-        <ScrollView 
-          horizontal={true}           
-          showsHorizontalScrollIndicator={false}
-          centerContent={true} 
-          style={styles.modeContentContainer} 
-          contentContainerStyle={styles.modeContent}
-        >
-          <Pressable style={styles.modesBtn} onPress={toggleModal}>
+        <Pressable style={styles.modesBtn} onPress={toggleModal}>
             <Text>Create Custom Game</Text>
           </Pressable>
           <Link href="/normal7x7Game" asChild>
