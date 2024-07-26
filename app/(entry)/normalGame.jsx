@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
-import Board from '@/components/3x3/board';
+import { View, StyleSheet, Text } from 'react-native';
 import GameLogic from '@/components/3x3/gameLogic';
 import ResultModal from '@/components/ui/resultModal';
 
-export default function NormalGame() {
+const NormalGame = () => {
   const [gameState, setGameState] = useState({
     board: Array(9).fill(null),
     currentPlayerTurn: 'Player 1',
@@ -12,143 +11,84 @@ export default function NormalGame() {
     player2Wins: 0,
     winner: null,
     player1Symbol: 'X',
-    player2Symbol: 'O'
+    player2Symbol: 'O',
   });
 
   const [isModalVisible, setModalVisible] = useState(false);
-  const [boardWidth, setBoardWidth] = useState(0);
+  const [resetTrigger, setResetTrigger] = useState(0); // Changed to number for easier toggling
 
-  const handleGameUpdate = ({ board, currentPlayerTurn, player1Wins, player2Wins, winner, player1Symbol, player2Symbol }) => {
-    console.log('Game update received:', { board, currentPlayerTurn, player1Wins, player2Wins, winner, player1Symbol, player2Symbol });
-    setGameState({ board, currentPlayerTurn, player1Wins, player2Wins, winner, player1Symbol, player2Symbol });
-    if (winner || currentPlayerTurn === 'Draw') {
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+    if (isModalVisible) {
+      resetGame();
+    }
+  };
+
+  const handleGameUpdate = (updatedGameState) => {
+    setGameState((prevState) => ({
+      ...prevState,
+      ...updatedGameState,
+      player1Wins: updatedGameState.winner === 'Player 1' ? prevState.player1Wins + 1 : prevState.player1Wins,
+      player2Wins: updatedGameState.winner === 'Player 2' ? prevState.player2Wins + 1 : prevState.player2Wins,
+    }));
+    if (updatedGameState.winner) {
       setModalVisible(true);
     }
   };
 
-  const gameLogic = GameLogic({ onGameUpdate: handleGameUpdate });
-
-  const handlePlayAgain = () => {
-    gameLogic.resetGame();
+  const resetGame = () => {
     setGameState((prevState) => ({
       ...prevState,
-      winner: null,
+      board: Array(9).fill(null),
       currentPlayerTurn: 'Player 1',
-      player1Symbol: gameLogic.player1Symbol,
-      player2Symbol: gameLogic.player2Symbol
+      winner: null,
     }));
-    setModalVisible(false);
+    setResetTrigger((prev) => prev + 1); // Increment reset trigger to force reset
   };
-
-  const isPlayer1Turn = gameState.currentPlayerTurn === 'Player 1';
-  const isPlayer2Turn = gameState.currentPlayerTurn === 'Player 2';
 
   return (
     <View style={styles.container}>
-      <View style={styles.majorContentContainer}>
-        <View style={styles.statContainer}>
-          <View style={[
-            styles.player1StatContainer,
-            styles.playerStatContainer,
-            { flex: 1 },
-            isPlayer1Turn && { borderColor: 'yellow', borderWidth: 2 }
-          ]}>
-            <View style={[styles.player1Avatar, styles.playerAvatar]}>
-              <Image 
-                source={require('@/assets/icons/player1Avatar.jpg')}
-                style={{width: '100%', height: '100%', borderRadius: 8}}
-              />
-            </View>
-            <Text style={{textAlign: 'center', marginTop: 10}}>Player 1</Text>
-          </View>
-          <View style={[styles.statusContainer, { flex: 1.5 }]}>
-            <View style={{flexWrap: 'wrap', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-              <Text style={{fontSize: 32, marginRight: 10, fontWeight: 'bold'}}>{gameState.player1Symbol}</Text>
-              <Text>:</Text>
-              <Text style={{fontSize: 32, marginLeft: 10, fontWeight: 'bold'}}>{gameState.player2Symbol}</Text>
-            </View>
-            <Text>{gameState.player1Wins}:{gameState.player2Wins}</Text>
-          </View>
-          <View style={[
-            styles.player2StatContainer,
-            styles.playerStatContainer,
-            { flex: 1 },
-            isPlayer2Turn && { borderColor: 'yellow', borderWidth: 2 }
-          ]}>
-            <View style={[styles.player2Avatar, styles.playerAvatar]}>
-              <Image 
-                source={require('@/assets/icons/player2Avatar.jpg')}
-                style={{width: '100%', height: '100%', borderRadius: 8}}
-              />
-            </View>
-            <Text style={{textAlign: 'center', marginTop: 10}}>Player 2</Text>
-          </View>
-        </View>
-
-        <View style={styles.boardContainer} onLayout={(event) => {
-            const { width } = event.nativeEvent.layout;
-            setBoardWidth(width);
-          }}
-        >
-          <Board width={boardWidth} board={gameState.board} handleCellClick={gameLogic.handleCellClick} />
-        </View>
+      <View style={styles.statusContainer}>
+        <Text style={styles.status}>
+          {gameState.winner ? `${gameState.winner} wins!` : `Next turn: ${gameState.currentPlayerTurn}`}
+        </Text>
       </View>
+      <GameLogic onGameUpdate={handleGameUpdate} resetTrigger={resetTrigger} />
       <ResultModal
         isModalVisible={isModalVisible}
-        toggleModal={handlePlayAgain}
+        toggleModal={toggleModal}
         winner={gameState.winner}
       />
+      <View style={styles.scoreboard}>
+        <Text style={styles.score}>Player 1 (X): {gameState.player1Wins}</Text>
+        <Text style={styles.score}>Player 2 (O): {gameState.player2Wins}</Text>
+      </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 50,
-  },
-  majorContentContainer: {
-    flex: 11,
-    padding: 20,
-    alignItems: 'center',
-  },
-  statContainer: {
-    width: '100%',
-    height: 'auto',
-    borderRadius: 8,
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  playerAvatar: {
-    width: 50,
-    height: 50,
-    borderRadius: 50, 
-  },
-  playerStatContainer: {
-    backgroundColor: '#fff',
-    paddingHorizontal: 16,
-    paddingVertical: 18,
-    alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 16,
+    alignItems: 'center',
+    padding: 20,
   },
   statusContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  boardContainer: {
-    marginTop: 25,
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-    height: 'auto',
-    borderRadius: 8,
-    backgroundColor: '#4299FF',
-    paddingVertical: 16,
+    marginBottom: 20,
   },
   status: {
-    fontSize: 24,
-    marginBottom: 10,
+    fontSize: 20,
+  },
+  scoreboard: {
+    marginTop: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%',
+  },
+  score: {
+    fontSize: 16,
   },
 });
+
+export default NormalGame;

@@ -4,13 +4,19 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": [
+        "./*"
+      ]
     }
   },
   "include": [
     "**/*.ts",
     "**/*.tsx",
     ".expo/types/**/*.ts",
-    "react-native-vector-icons.d.ts"
-, "components/board3x3.jsx", "../All-In-One/all-in-one/_layout.tsx", "../All-In-One/all-in-one/_layout.tsx"  ]
+    "react-native-vector-icons.d.ts",
+    "components/board3x3.jsx",
+    "../All-In-One/all-in-one/_layout.tsx",
+    "../All-In-One/all-in-one/_layout.tsx",
+    "expo-env.d.ts"
+  ]
 }

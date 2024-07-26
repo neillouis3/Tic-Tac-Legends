@@ -13,7 +13,6 @@ const ResultModal: React.FC<ResultModalProps> = ({
   toggleModal,
   winner,
 }) => {
-  
   return (   
     <Modal
       isVisible={isModalVisible}
