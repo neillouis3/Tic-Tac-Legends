@@ -48,12 +48,9 @@ export default function GameScreen({ navigation }: { navigation: any }) {
         <Pressable style={styles.modesBtn} onPress={toggleModal}>
             <Text>Create Custom Game</Text>
           </Pressable>
-          <Link href="/normal7x7Game" asChild>
-            <Pressable style={styles.modesBtn}>
-              <Text>7x7</Text>
-              <Text>Board with blocked cells</Text>
-            </Pressable>
-          </Link>
+          <Pressable style={styles.modesBtn} onPress={toggleModal}>
+            <Text>3x3</Text>
+          </Pressable>
           <Pressable style={styles.modesBtn} onPress={toggleModal}>
             <Text>More Coming Soon</Text>
           </Pressable>
