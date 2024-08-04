@@ -360,7 +360,7 @@
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.neillouis3.TicTacLegends;
-				PRODUCT_NAME = TicTacLegends;
+				PRODUCT_NAME = "TicTacLegends";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = neillouis3;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -368,7 +368,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "TicTacLegends/TicTacLegends-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -401,14 +401,14 @@
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = com.neillouis3.TicTacLegends;
-				PRODUCT_NAME = TicTacLegends;
+				PRODUCT_NAME = "TicTacLegends";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = neillouis3;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "TicTacLegends/TicTacLegends-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
