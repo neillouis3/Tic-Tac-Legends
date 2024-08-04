@@ -5,7 +5,8 @@ export default function Board({ board, handleCellClick, width }) {
   const renderCell = (index) => {
     return (
       <TouchableOpacity 
-      style={[styles.cell, { width: width / 5.75, height: width / 5.5, margin: 2 }]} 
+        key={index}
+        style={[styles.cell, { width: width / 5.75, height: width / 5.75, margin: 2 }]} 
         onPress={() => handleCellClick(index)}
       >
         <Text style={styles.cellText}>{board[index]}</Text>
@@ -68,8 +69,6 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     justifyContent: 'center',
     alignItems: 'center',
-
-
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.5,
@@ -78,7 +77,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   cellText: {
-    fontSize: 48,
+    fontSize: 24,
     fontWeight: 'bold',
     color: '#FBB64E',
     justifyContent: 'center',
