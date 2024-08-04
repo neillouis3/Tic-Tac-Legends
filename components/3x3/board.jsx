@@ -6,7 +6,7 @@ export default function Board({ board, handleCellClick, width }) {
     return (
       <TouchableOpacity 
         key={index}
-        style={[styles.cell, { width: width / 3.5, height: width / 3.5, margin: 4 }]} 
+        style={[styles.cell, { width: width / 5, height: width / 5, margin: 4 }]} 
         onPress={() => handleCellClick(index)}
       >
         <Text style={styles.cellText}>{board[index]}</Text>

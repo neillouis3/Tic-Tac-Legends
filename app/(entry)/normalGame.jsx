@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
-import GameLogic from '@/components/3x3/gameLogic';
-import ResultModal from '@/components/ui/resultModal';
+import { View, Text, StyleSheet, Image } from 'react-native';
+import Board from './board.jsx';
+import GameLogic from './gameLogic.jsx';
+import ResultModal from './resultModal';
+import { Link, router } from 'expo-router';
 
-const NormalGame = () => {
+export default function NormalGame() {
   const [gameState, setGameState] = useState({
     board: Array(9).fill(null),
-    currentPlayerTurn: 'Player 1',
+    status: 'Next player: Player 1 (X)',
     player1Wins: 0,
     player2Wins: 0,
     winner: null,
@@ -15,80 +17,240 @@ const NormalGame = () => {
   });
 
   const [isModalVisible, setModalVisible] = useState(false);
-  const [resetTrigger, setResetTrigger] = useState(0); // Changed to number for easier toggling
+  const [boardWidth, setBoardWidth] = useState(0);
 
-  const toggleModal = () => {
-    setModalVisible(!isModalVisible);
-    if (isModalVisible) {
-      resetGame();
-    }
-  };
-
-  const handleGameUpdate = (updatedGameState) => {
-    setGameState((prevState) => ({
-      ...prevState,
-      ...updatedGameState,
-      player1Wins: updatedGameState.winner === 'Player 1' ? prevState.player1Wins + 1 : prevState.player1Wins,
-      player2Wins: updatedGameState.winner === 'Player 2' ? prevState.player2Wins + 1 : prevState.player2Wins,
-    }));
-    if (updatedGameState.winner) {
+  const handleGameUpdate = ({
+    board,
+    status,
+    player1Wins,
+    player2Wins,
+    winner,
+    player1Symbol,
+    player2Symbol,
+  }) => {
+    console.log('Game update received');
+    console.log('player1Symbol:', player1Symbol);
+    console.log('player2Symbol:', player2Symbol);
+    setGameState({
+      board,
+      status,
+      player1Wins,
+      player2Wins,
+      winner,
+      player1Symbol,
+      player2Symbol,
+    });
+    if (winner) {
       setModalVisible(true);
     }
   };
 
-  const resetGame = () => {
+  const gameLogic = GameLogic({ onGameUpdate: handleGameUpdate });
+
+  const handlePlayAgain = () => {
+    setModalVisible(false);
+    gameLogic.resetGame();
     setGameState((prevState) => ({
       ...prevState,
-      board: Array(9).fill(null),
-      currentPlayerTurn: 'Player 1',
       winner: null,
+      status: 'Next player: Player 1 (X)',
     }));
-    setResetTrigger((prev) => prev + 1); // Increment reset trigger to force reset
   };
+
+  // Determine if it's Player 1's or Player 2's turn
+  const isPlayer1Turn = gameState.status.includes('Player 1');
+  const isPlayer2Turn = gameState.status.includes('Player 2');
 
   return (
     <View style={styles.container}>
-      <View style={styles.statusContainer}>
-        <Text style={styles.status}>
-          {gameState.winner ? `${gameState.winner} wins!` : `Next turn: ${gameState.currentPlayerTurn}`}
-        </Text>
+    
+        <View style={styles.statContainer}>
+          <View
+            style={[
+              styles.player1StatContainer,
+              styles.playerStatContainer,
+              { flex: 1, flexWrap: 'wrap', flexDirection: 'row' },
+            ]}
+          >
+            <View 
+              style={[
+                styles.player1Avatar, 
+                styles.playerAvatar,               
+                isPlayer1Turn && styles.player1Turn,
+                {flex: 1,}
+              ]}
+            >
+              <Image 
+                source={require('./player1Avatar.jpg')}
+                style={{width: '100%', height: '100%'}}
+              />
+            </View>
+            <View
+              style={{flex: 2,}}
+            >
+              <Text 
+                style={{ 
+                  fontSize: 18, 
+                  fontWeight: 'bold',
+                  textAlign: 'right',
+                }}
+              >   
+                {gameState.player1Symbol}
+              </Text>
+              <Text
+                style={{
+                    textAlign: 'left',
+                }}
+              >Player 1</Text>
+              <Text
+                style={{
+                  textAlign: 'left',
+                }}
+              >
+                {gameState.player1Wins}</Text>
+            </View>
+          </View>
+          <View
+            style={[
+              styles.player2StatContainer,
+              styles.playerStatContainer,
+              { flex: 1, flexWrap: 'wrap', flexDirection: 'row' },
+               
+            ]}
+          >
+            <View
+              style={{
+                flex: 2,
+              }}
+            >
+              <Text 
+                style={{ 
+                  fontSize: 18, 
+                  fontWeight: 'bold', 
+                  textAlign: 'LEft', 
+
+                }}
+              >
+                {gameState.player2Symbol}
+              </Text>
+              <Text
+                style={{
+                  textAlign: 'right',
+                }}
+              >Player 2</Text>
+              <Text
+                style={{
+                    textAlign: 'right',
+                  }}
+              >{gameState.player2Wins}</Text>
+            </View>
+            <View 
+              style={[
+                styles.player1Avatar, 
+                styles.playerAvatar, 
+                isPlayer2Turn && styles.player2Turn,
+                {flex: 1,}
+              ]}
+            >
+              <Image 
+                source={require('./player2Avatar.jpg')}
+                style={{width: '100%', height: '100%',}}
+              />
+            </View>
+          </View>
+        </View>
+
+        <View
+          style={styles.boardContainer}
+          onLayout={(event) => {
+            const { width } = event.nativeEvent.layout;
+            setBoardWidth(width);
+          }}
+        >
+          <Board
+            width={boardWidth}
+            board={gameState.board}
+            handleCellClick={gameLogic.handleCellClick}
+          />
+
       </View>
-      <GameLogic onGameUpdate={handleGameUpdate} resetTrigger={resetTrigger} />
       <ResultModal
         isModalVisible={isModalVisible}
-        toggleModal={toggleModal}
+        toggleModal={handlePlayAgain}
         winner={gameState.winner}
       />
-      <View style={styles.scoreboard}>
-        <Text style={styles.score}>Player 1 (X): {gameState.player1Wins}</Text>
-        <Text style={styles.score}>Player 2 (O): {gameState.player2Wins}</Text>
-      </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#F5f5f5',
+    opacity: '50',
+    justifyContent: 'center',
+    
+  },
+
+  statContainer: {
+    width: '100%',
+    height: 'auto',
+
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: '#4299FF',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    gap: 8,
+
+
+  },
+
+  boardContainer: {
+    marginTop: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
-  },
-  statusContainer: {
-    marginBottom: 20,
-  },
-  status: {
-    fontSize: 20,
-  },
-  scoreboard: {
-    marginTop: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
     width: '100%',
-  },
-  score: {
-    fontSize: 16,
-  },
-});
+    height: 'auto',
 
-export default NormalGame;
+    backgroundColor: '#4299FF',
+    paddingVertical: 16,
+  },
+  playerAvatar: {
+    width: 50,
+    height: 50,
+    borderRadius: 5,
+    backgroundColor: 'grey',
+    borderWidth: 5,
+    margin: 8,
+  },
+  playerStatContainer: {
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 16,
+
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 3.84,
+    elevation: 5,
+
+  },
+  player1StatContainer: {
+    paddingRight: 8,
+  },
+  player2StatContainer: {
+    paddingLeft: 8,
+  },
+  player1Turn: {
+    borderColor: 'yellow',
+    borderWidth: 5,
+  },
+  player2Turn: {
+    borderColor: 'yellow',
+    borderWidth: 5,
+  },
+
+});

@@ -1,44 +1,58 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { useState, useEffect } from 'react';
 
-export default function GameLogic({ onGameUpdate, resetTrigger }) {
+export default function GameLogic({ onGameUpdate }) {
   const [board, setBoard] = useState(Array(9).fill(null));
   const [isXNext, setIsXNext] = useState(true);
   const [gameOver, setGameOver] = useState(false);
+  const [player1Wins, setPlayer1Wins] = useState(0);
+  const [player2Wins, setPlayer2Wins] = useState(0);
   const [player1Symbol, setPlayer1Symbol] = useState('X'); // Default symbol for Player 1 is 'X'
-  const player2Symbol = player1Symbol === 'X' ? 'O' : 'X'; // Player 2 symbol is the opposite
-  const [winner, setWinner] = useState(null);
+  const player2Symbol = player1Symbol === 'X' ? 'O' : 'X'; // Player 2's symbol is the opposite of Player 1
 
   useEffect(() => {
-    if (resetTrigger !== null) {
-      setBoard(Array(9).fill(null));
-      setIsXNext(true);
-      setGameOver(false);
-      setWinner(null);
-    }
-  }, [resetTrigger]);
-
-  useEffect(() => {
-    const gameWinner = calculateWinner(board);
-    let currentPlayerTurn;
-    if (gameWinner) {
-      currentPlayerTurn = gameWinner === player1Symbol ? 'Player 1' : 'Player 2';
+    const winner = calculateWinner(board);
+    let status;
+    if (winner) {
+      status = 'Winner: ' + (winner === player1Symbol ? 'Player 1' : 'Player 2');
       setGameOver(true);
-      setWinner(gameWinner === player1Symbol ? 'Player 1' : 'Player 2');
-    } else if (!board.includes(null)) {
-      currentPlayerTurn = 'Draw';
+      if (winner === player1Symbol) {
+        setPlayer1Wins(player1Wins + 1);
+      } else {
+        setPlayer2Wins(player2Wins + 1);
+      }
+      onGameUpdate && onGameUpdate({
+        board,
+        status,
+        player1Wins: player1Wins + (winner === player1Symbol ? 1 : 0),
+        player2Wins: player2Wins + (winner !== player1Symbol ? 1 : 0),
+        winner: winner === player1Symbol ? 'Player 1' : 'Player 2',
+        player1Symbol,
+        player2Symbol,
+      });
+    } else if (isBoardFull(board)) {
+      status = 'Draw!';
       setGameOver(true);
-      setWinner('Draw');
+      onGameUpdate && onGameUpdate({
+        board,
+        status,
+        player1Wins,
+        player2Wins,
+        winner: 'Draw',
+        player1Symbol,
+        player2Symbol,
+      });
     } else {
-      currentPlayerTurn = isXNext ? 'Player 1' : 'Player 2';
-      setWinner(null);
+      status = 'Next player: ' + (isXNext ? (player1Symbol === 'X' ? 'Player 1 (X)' : 'Player 2 (X)') : (player1Symbol === 'O' ? 'Player 1 (O)' : 'Player 2 (O)'));
+      onGameUpdate && onGameUpdate({
+        board,
+        status,
+        player1Wins,
+        player2Wins,
+        winner: null,
+        player1Symbol,
+        player2Symbol,
+      });
     }
-
-    onGameUpdate({
-      board,
-      currentPlayerTurn,
-      winner: gameWinner ? (gameWinner === player1Symbol ? 'Player 1' : 'Player 2') : null,
-    });
   }, [board]);
 
   const handleCellClick = (index) => {
@@ -51,14 +65,9 @@ export default function GameLogic({ onGameUpdate, resetTrigger }) {
 
   const calculateWinner = (squares) => {
     const lines = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6],
+      [0, 1, 2], [3, 4, 5], [6, 7, 8], // rows
+      [0, 3, 6], [1, 4, 7], [2, 5, 8], // columns
+      [0, 4, 8], [2, 4, 6]             // diagonals
     ];
     for (let i = 0; i < lines.length; i++) {
       const [a, b, c] = lines[i];
@@ -69,38 +78,20 @@ export default function GameLogic({ onGameUpdate, resetTrigger }) {
     return null;
   };
 
-  return (
-    <View style={styles.board}>
-      {board.map((cell, index) => (
-        <TouchableOpacity
-          key={index}
-          style={styles.cell}
-          onPress={() => handleCellClick(index)}
-        >
-          <Text style={styles.cellText}>{cell}</Text>
-        </TouchableOpacity>
-      ))}
-    </View>
-  );
-}
+  const isBoardFull = (squares) => {
+    return squares.every(square => square !== null);
+  };
 
-const styles = StyleSheet.create({
-  board: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    width: 300,
-    height: 300,
-    margin: 20,
-  },
-  cell: {
-    width: '33%',
-    height: '33%',
-    borderWidth: 1,
-    borderColor: '#000',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  cellText: {
-    fontSize: 24,
-  },
-});
+  const resetGame = () => {
+    setBoard(Array(9).fill(null));
+    setIsXNext(true);
+    setGameOver(false);
+  };
+
+  const chooseSymbol = (symbol) => {
+    setPlayer1Symbol(symbol);
+    resetGame();
+  };
+
+  return { board, handleCellClick, resetGame, chooseSymbol, player1Symbol, player2Symbol, player1Wins, player2Wins, gameOver };
+}
