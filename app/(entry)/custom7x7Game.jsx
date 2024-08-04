@@ -1,27 +1,55 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, StyleSheet, TouchableOpacity, Modal } from 'react-native';
-import Svg, { Path } from 'react-native-svg';
-import useCustom7x7GameLogic from '@/components/mine7x7/custom7x7GameLogic';
-import Custom7x7Board from '@/components/mine7x7/custom7x7Board';
-import { Link } from 'expo-router';
-import { router } from 'expo-router';
+import { View, Text, StyleSheet, Image, TouchableOpacity, Modal } from 'react-native';
+import useCustom7x7GameLogic from './gameLogic.jsx';
+import Custom7x7Board from './board.jsx';
+import ResultModal from './resultModal';
+import { Link, router } from 'expo-router';
 
-export default function Custom7x7Game({ navigation }) {
+export default function Custom7x7Game() {
   const [gameState, setGameState] = useState({
     board: Array(49).fill(null),
     status: 'Next player: Player 1 (X)',
     player1Wins: 0,
     player2Wins: 0,
     winner: null,
+    player1Symbol: 'X',
+    player2Symbol: 'O',
     blockedSquares: [],
   });
 
-  const gameLogic = useCustom7x7GameLogic((update) => {
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [boardWidth, setBoardWidth] = useState(0);
+
+  const handleGameUpdate = (update) => {
+    const {
+      board,
+      status,
+      player1Wins,
+      player2Wins,
+      winner,
+      player1Symbol,
+      player2Symbol,
+      blockedSquares,
+    } = update;
+
     setGameState((prevState) => ({
       ...prevState,
-      ...update,
+      board,
+      status,
+      player1Wins,
+      player2Wins,
+      winner,
+      player1Symbol,
+      player2Symbol,
+      blockedSquares,
     }));
-  });
+
+    if (winner) {
+      setModalVisible(true);
+    }
+  };
+
+  const gameLogic = useCustom7x7GameLogic(handleGameUpdate);
 
   useEffect(() => {
     setGameState((prevState) => ({
@@ -31,6 +59,7 @@ export default function Custom7x7Game({ navigation }) {
   }, [gameLogic.blockedSquares]);
 
   const handlePlayAgain = () => {
+    setModalVisible(false);
     gameLogic.resetGame();
     setGameState((prevState) => ({
       ...prevState,
@@ -41,27 +70,102 @@ export default function Custom7x7Game({ navigation }) {
     }));
   };
 
+  const isPlayer1Turn = gameState.status.includes('Player 1');
+  const isPlayer2Turn = gameState.status.includes('Player 2');
+
   return (
     <View style={styles.container}>
-      <Link href={router.back}  asChild>
-        <TouchableOpacity style={styles.backButton}>
-          <Svg height="48" width="48" viewBox="0 0 512 512">
-            <Path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="48" d="M244 400L100 256l144-144M120 256h292" />
-          </Svg>
-        </TouchableOpacity>
-      </Link>
-      <Text style={styles.status}>{gameState.status}</Text>
-      <Custom7x7Board board={gameState.board} handleCellClick={gameLogic.handleCellClick} blockedSquares={gameState.blockedSquares} />
-      <Text>Player 1 Wins: {gameState.player1Wins}</Text>
-      <Text>Player 2 Wins: {gameState.player2Wins}</Text>
-      <Modal visible={gameState.winner !== null} transparent={true} animationType="slide">
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalText}>{gameState.winner} wins!</Text>
-            <Button title="Play Again" onPress={handlePlayAgain} />
+      <View style={styles.statContainer}>
+        <View
+          style={[
+            styles.player1StatContainer,
+            styles.playerStatContainer,
+            { flex: 1, flexWrap: 'wrap', flexDirection: 'row' },
+          ]}
+        >
+          <View
+            style={[
+              styles.player1Avatar,
+              styles.playerAvatar,
+              isPlayer1Turn && styles.player1Turn,
+              { flex: 1 },
+            ]}
+          >
+            <Image
+              source={require('./player1Avatar.jpg')}
+              style={{ width: '100%', height: '100%' }}
+            />
+          </View>
+          <View style={{ flex: 2 }}>
+            <Text
+              style={{
+                fontSize: 18,
+                fontWeight: 'bold',
+                textAlign: 'right',
+              }}
+            >
+              {gameState.player1Symbol}
+            </Text>
+            <Text style={{ textAlign: 'left' }}>Player 1</Text>
+            <Text style={{ textAlign: 'left' }}>{gameState.player1Wins}</Text>
           </View>
         </View>
-      </Modal>
+        <View
+          style={[
+            styles.player2StatContainer,
+            styles.playerStatContainer,
+            { flex: 1, flexWrap: 'wrap', flexDirection: 'row' },
+          ]}
+        >
+          <View style={{ flex: 2 }}>
+            <Text
+              style={{
+                fontSize: 18,
+                fontWeight: 'bold',
+                textAlign: 'left',
+              }}
+            >
+              {gameState.player2Symbol}
+            </Text>
+            <Text style={{ textAlign: 'right' }}>Player 2</Text>
+            <Text style={{ textAlign: 'right' }}>{gameState.player2Wins}</Text>
+          </View>
+          <View
+            style={[
+              styles.player2Avatar,
+              styles.playerAvatar,
+              isPlayer2Turn && styles.player2Turn,
+              { flex: 1 },
+            ]}
+          >
+            <Image
+              source={require('./player2Avatar.jpg')}
+              style={{ width: '100%', height: '100%' }}
+            />
+          </View>
+        </View>
+      </View>
+
+      <View
+        style={styles.boardContainer}
+        onLayout={(event) => {
+          const { width } = event.nativeEvent.layout;
+          setBoardWidth(width);
+        }}
+      >
+        <Custom7x7Board
+          width={boardWidth}
+          board={gameState.board}
+          handleCellClick={gameLogic.handleCellClick}
+          blockedSquares={gameState.blockedSquares}
+        />
+      </View>
+
+      <ResultModal
+        isModalVisible={isModalVisible}
+        toggleModal={handlePlayAgain}
+        winner={gameState.winner}
+      />
     </View>
   );
 }
@@ -69,30 +173,61 @@ export default function Custom7x7Game({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#F5f5f5',
+    justifyContent: 'center',
+  },
+  statContainer: {
+    width: '100%',
+    height: 'auto',
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: '#4299FF',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    gap: 8,
+  },
+  boardContainer: {
+    marginTop: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    width: '100%',
+    height: 'auto',
+    backgroundColor: '#4299FF',
+    paddingVertical: 16,
   },
-  status: {
-    fontSize: 24,
-    marginBottom: 10,
+  playerAvatar: {
+    width: 50,
+    height: 50,
+    borderRadius: 5,
+    backgroundColor: 'grey',
+    borderWidth: 5,
+    margin: 8,
   },
-  modalContainer: {
-    flex: 1,
+  playerStatContainer: {
+    backgroundColor: '#fff',
+    alignItems: 'center',
     justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    borderRadius: 16,
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
-  modalContent: {
-    width: 300,
-    padding: 20,
-    backgroundColor: 'white',
-    borderRadius: 10,
-    alignItems: 'center',
+  player1StatContainer: {
+    paddingRight: 8,
   },
-  modalText: {
-    fontSize: 24,
-    marginBottom: 20,
+  player2StatContainer: {
+    paddingLeft: 8,
+  },
+  player1Turn: {
+    borderColor: 'yellow',
+    borderWidth: 5,
+  },
+  player2Turn: {
+    borderColor: 'yellow',
+    borderWidth: 5,
   },
   backButton: {
     position: 'absolute',
