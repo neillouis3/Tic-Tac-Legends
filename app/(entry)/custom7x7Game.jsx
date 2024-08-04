@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, Modal } from 'react-native';
-import useCustom7x7GameLogic from './gameLogic.jsx';
-import Custom7x7Board from './board.jsx';
-import ResultModal from './resultModal';
+import useCustom7x7GameLogic from '@/components/mine7x7/custom7x7GameLogic.jsx';
+import Custom7x7Board from '@/components/mine7x7/custom7x7Board.jsx';
+import ResultModal from '@/components/ui/resultModal';
 import { Link, router } from 'expo-router';
 
 export default function Custom7x7Game() {
@@ -92,7 +92,7 @@ export default function Custom7x7Game() {
             ]}
           >
             <Image
-              source={require('./player1Avatar.jpg')}
+              source={require('@/assets/icons/player1Avatar.jpg')}
               style={{ width: '100%', height: '100%' }}
             />
           </View>
@@ -139,7 +139,7 @@ export default function Custom7x7Game() {
             ]}
           >
             <Image
-              source={require('./player2Avatar.jpg')}
+              source={require('@/assets/icons/player2Avatar.jpg')}
               style={{ width: '100%', height: '100%' }}
             />
           </View>

@@ -27,7 +27,6 @@ export default function GameScreen({ navigation }: { navigation: any }) {
           <Link href="/normalGame" asChild>
             <Pressable style={styles.modesBtn}>
               <Text>3x3</Text>
-              <Text>Classic game of tic tac toe</Text>
             </Pressable>
           </Link>
           <Link href="/normal5x5Game" asChild>
@@ -45,13 +44,16 @@ export default function GameScreen({ navigation }: { navigation: any }) {
 
       <View style={styles.modeContainer}>
         <Text style={styles.modeTitle}>Custom Modes</Text>
-        <Pressable style={styles.modesBtn} onPress={toggleModal}>
-            <Text>Create Custom Game</Text>
-          </Pressable>
+
         <ScrollView horizontal={true} style={styles.modeContentContainer} contentContainerStyle={styles.modeContent}>
           <Pressable style={styles.modesBtn} onPress={toggleModal}>
-            <Text>3x3</Text>
+            <Text>Create Custom Game</Text>
           </Pressable>
+          <Link href="/custom7x7Game" asChild>
+            <Pressable style={styles.modesBtn}>
+              <Text>mine7x7</Text>
+            </Pressable>
+          </Link>
           <Pressable style={styles.modesBtn} onPress={toggleModal}>
             <Text>More Coming Soon</Text>
           </Pressable>

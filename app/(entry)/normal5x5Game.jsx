@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
-import Board from './board.jsx';
-import GameLogic from './gameLogic.jsx';
-import ResultModal from './resultModal';
+import Board from '@/components/5x5/board.jsx';
+import GameLogic from '@/components/5x5/gameLogic.jsx';
+import ResultModal from '@/components/ui/resultModal';
 import { Link, router } from 'expo-router';
 
 export default function Normal5x5Game() {
@@ -74,7 +74,7 @@ export default function Normal5x5Game() {
               { flex: 1 },
             ]}>
             <Image
-              source={require('./player1Avatar.jpg')}
+              source={require('@/assets/icons/player1Avatar.jpg')}
               style={{ width: '100%', height: '100%' }}
             />
           </View>
@@ -109,7 +109,7 @@ export default function Normal5x5Game() {
               { flex: 1 },
             ]}>
             <Image
-              source={require('./player2Avatar.jpg')}
+              source={require('@/assets/icons/player2Avatar.jpg')}
               style={{ width: '100%', height: '100%' }}
             />
           </View>

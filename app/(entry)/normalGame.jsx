@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
-import Board from './board.jsx';
-import GameLogic from './gameLogic.jsx';
-import ResultModal from './resultModal';
+import Board from '@/components/3x3/board.jsx';
+import GameLogic from '@/components/3x3/gameLogic.jsx';
+import ResultModal from '@/components/ui/resultModal';
 import { Link, router } from 'expo-router';
 
 export default function NormalGame() {
@@ -28,9 +28,7 @@ export default function NormalGame() {
     player1Symbol,
     player2Symbol,
   }) => {
-    console.log('Game update received');
-    console.log('player1Symbol:', player1Symbol);
-    console.log('player2Symbol:', player2Symbol);
+
     setGameState({
       board,
       status,
@@ -81,7 +79,7 @@ export default function NormalGame() {
               ]}
             >
               <Image 
-                source={require('./player1Avatar.jpg')}
+                source={require('@/assets/icons/player1Avatar.jpg')}
                 style={{width: '100%', height: '100%'}}
               />
             </View>
@@ -153,7 +151,7 @@ export default function NormalGame() {
               ]}
             >
               <Image 
-                source={require('./player2Avatar.jpg')}
+                source={require('@/assets/icons/player2Avatar.jpg')}
                 style={{width: '100%', height: '100%',}}
               />
             </View>
