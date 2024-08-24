@@ -1,37 +1,29 @@
 import React from 'react';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { Tabs } from 'expo-router';
-import GameIcon from '@/assets/icons/game-controller.svg';
-import GameOutlineIcon from '@/assets/icons/game-controller-outline.svg';
-import ProfileIcon from '@/assets/icons/person.svg';
-import ProfileOutlineIcon from '@/assets/icons/person-outline.svg';
-import SettingsIcon from '@/assets/icons/settings.svg';
-import SettingsOutlineIcon from '@/assets/icons/settings-outline.svg';
-import { SvgProps } from 'react-native-svg';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 export default function EntryLayout() {
   const colorScheme = useColorScheme();
-
   return (
-    <Tabs
+        <Tabs
       initialRouteName="index"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, size }) => {
-          let IconComponent: React.FC<SvgProps>;
-          let iconColor = focused ? '#4299FF' : '#D9D9D9'; // Change colors as needed
+          let iconName: string;
 
           if (route.name === 'index') {
-            IconComponent = focused ? GameIcon : GameOutlineIcon;
+            iconName = focused ? 'gamepad-variant' : 'gamepad-variant-outline';
           } else if (route.name === 'profileScreen') {
-            IconComponent = focused ? ProfileIcon : ProfileOutlineIcon;
+            iconName = focused ? 'account' : 'account-outline';
           } else if (route.name === 'settingScreen') {
-            IconComponent = focused ? SettingsIcon : SettingsOutlineIcon;
+            iconName = focused ? 'cog' : 'cog-outline';
           } else {
             return null;
           }
 
-          return <IconComponent width={size} height={size} color='#D9D9D9' fill={iconColor} />;
+          return <Icon name={iconName} size={size} color={focused ? '#4299FF' : '#D9D9D9'} />;
         },
 
         tabBarStyle: {
